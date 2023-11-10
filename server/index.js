@@ -12,6 +12,7 @@ app.use(cors());
 
 //routers
 const usersRouter = require("./routes/users.router");
+const postsRouter = require("./routes/posts.router");
 
 app.get("/", (req, res) => {
   res.send("Social Media Application");
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 
 //routes
 app.use("/api/users", usersRouter);
+app.use("/api/posts", postsRouter);
 
 const PORT = process.env.PORT || 3001;
 
