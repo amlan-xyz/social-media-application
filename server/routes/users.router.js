@@ -17,6 +17,7 @@ const {
   addBookmark,
   removeBookmark,
 } = require("../controllers/users.controller");
+const { authVerify } = require("../middlewares/auth.middleware");
 
 router.get("", async (req, res) => {
   try {
@@ -79,12 +80,10 @@ router.post("/login", async (req, res) => {
         const token = jwt.sign({ userId: loggedInUser._id }, JWT_SECRET, {
           expiresIn: "24h",
         });
-        res
-          .status(200)
-          .json({
-            message: "Login successful",
-            data: { user: loggedInUser, token },
-          });
+        res.status(200).json({
+          message: "Login successful",
+          data: { user: loggedInUser, token },
+        });
       } else {
         res.status(401).json({ message: "Incorrect Credentials" });
       }
@@ -94,8 +93,8 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/profile", async (req, res) => {
-  const { userId } = req.body;
+router.get("/profile", authVerify, async (req, res) => {
+  const { userId } = req.user;
   try {
     const user = await getUserById(userId);
     if (user) {
@@ -141,8 +140,9 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/profile/update", async (req, res) => {
-  const { userId, updatedData } = req.body;
+router.put("/profile/update", authVerify, async (req, res) => {
+  const { userId } = req.user;
+  const { updatedData } = req.body;
   try {
     const user = await getUserById(userId);
     if (user) {
@@ -174,8 +174,8 @@ router.put("/profile/update", async (req, res) => {
   }
 });
 
-router.post("/follow/:id", async (req, res) => {
-  const { userId } = req.body;
+router.post("/follow/:id", authVerify, async (req, res) => {
+  const { userId } = req.user;
   const followUserId = req.params.id;
 
   try {
@@ -193,8 +193,8 @@ router.post("/follow/:id", async (req, res) => {
   }
 });
 
-router.post("/unfollow/:id", async (req, res) => {
-  const { userId } = req.body;
+router.post("/unfollow/:id", authVerify, async (req, res) => {
+  const { userId } = req.user;
   const unfollowUserId = req.params.id;
   try {
     const updatedUser = await unfollowUser(userId, unfollowUserId);
@@ -214,8 +214,8 @@ router.post("/unfollow/:id", async (req, res) => {
   }
 });
 
-router.post("/bookmarks/:id/add", async (req, res) => {
-  const { userId } = req.body;
+router.post("/bookmarks/:id/add", authVerify, async (req, res) => {
+  const { userId } = req.user;
   const postId = req.params.id;
   try {
     const updatedUser = await addBookmark(userId, postId);
@@ -234,8 +234,8 @@ router.post("/bookmarks/:id/add", async (req, res) => {
   }
 });
 
-router.post("/bookmarks/:id/remove", async (req, res) => {
-  const { userId } = req.body;
+router.post("/bookmarks/:id/remove", authVerify, async (req, res) => {
+  const { userId } = req.user;
   const postId = req.params.id;
   try {
     const updatedUser = await removeBookmark(userId, postId);

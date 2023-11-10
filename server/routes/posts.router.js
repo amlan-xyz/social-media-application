@@ -12,9 +12,11 @@ const {
   deletePost,
   updatePost,
 } = require("../controllers/posts.controller");
+const { authVerify } = require("../middlewares/auth.middleware");
 
-router.post("", async (req, res) => {
-  const { userId, postData } = req.body;
+router.post("", authVerify, async (req, res) => {
+  const { userId } = req.user;
+  const { postData } = req.body;
   try {
     const newPost = await createPost(userId, postData);
     if (newPost) {
@@ -106,8 +108,8 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.post("/:id/like", async (req, res) => {
-  const { userId } = req.body;
+router.post("/:id/like", authVerify, async (req, res) => {
+  const { userId } = req.user;
   const postId = req.params.id;
   try {
     const likedPost = await likePost(userId, postId);
@@ -126,8 +128,8 @@ router.post("/:id/like", async (req, res) => {
   }
 });
 
-router.post("/:id/unlike", async (req, res) => {
-  const { userId } = req.body;
+router.post("/:id/unlike", authVerify, async (req, res) => {
+  const { userId } = req.user;
   const postId = req.params.id;
   try {
     const unlikedPost = await unlikePost(userId, postId);
