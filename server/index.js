@@ -22,6 +22,10 @@ app.get("/", (req, res) => {
 app.use("/api/users", usersRouter);
 app.use("/api/posts", postsRouter);
 
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found" });
+});
+
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
