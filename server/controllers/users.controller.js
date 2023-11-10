@@ -1,3 +1,4 @@
+const Post = require("../models/posts.model");
 const User = require("../models/users.model");
 
 const signup = async (userData) => {
@@ -60,46 +61,66 @@ const updateProfile = async (userId, updatedData) => {
   }
 };
 
-// const followUser = async (userId, followUserId) => {
-//   try {
-//     const user = await User.findById(userId);
+const followUser = async (userId, followUserId) => {
+  try {
+    const user = await User.findById(userId);
+    const followUser = await User.findById(followUserId);
+    user.following.push(followUser);
+    followUser.followers.push(user);
+    await user.save();
+    await followUser.save();
+    return { user, followUser };
+  } catch (error) {
+    console.error("Error following user", error);
+  }
+};
 
-//     const isFollowing = user.following.some(
-//       (currUser) => currUser._id === followUserId
-//     );
-//     if (isFollowing) {
-//       throw "Already following";
-//     } else {
-//       const followUser = await User.findById(followUserId);
-//       const updatedFollowingList = [...user.following, followUser];
-//       user.following = updatedFollowingList;
-//       const updatedFollowerList = [...followUser.followers, user];
-//       followUser.followers = updatedFollowerList;
-//       await user.save();
-//       await followUser.save();
-//       return user;
-//     }
-//   } catch (error) {
-//     console.error("Error following user:-", error);
-//   }
-// };
+const unfollowUser = async (userId, unfollowUserId) => {
+  try {
+    const user = await User.findById(userId);
+    const unfollowUser = await User.findById(unfollowUserId);
+    const updatedFollowing = user.following.filter(
+      ({ _id }) => _id.toHexString() !== unfollowUser._id.toHexString()
+    );
+    user.following = updatedFollowing;
+    const updatedFollowers = unfollowUser.followers.filter(
+      ({ _id }) => _id.toHexString() !== user._id.toHexString()
+    );
+    unfollowUser.followers = updatedFollowers;
+    await user.save();
+    await unfollowUser.save();
+    return { user, unfollowUser };
+  } catch (error) {
+    console.error("Error unfollowing user", error);
+  }
+};
 
-// const unfollowUser = async (userId, followUserId) => {
-//   try {
-//     const user = await User.findById(userId);
-//     const followUser = await User.findById(followUserId);
-//     const updatedFollowingList = user.following.filter(
-//       ({ username }) => username !== followUser.username
-//     );
-//     user.following = updatedFollowingList;
-//     console.log(user);
-//     const updatedFollowerList = followUser.followers.filter(
-//       ({ _id }) => _id !== userId
-//     );
-//   } catch (error) {
-//     console.error("Error unfollowing user:-", error);
-//   }
-// };
+const addBookmark = async (userId, postId) => {
+  try {
+    const user = await User.findById(userId);
+    const post = await Post.findById(postId);
+    user.bookmarks.push(post);
+    await user.save();
+    return user;
+  } catch (error) {
+    console.error("Error adding bookmark", error);
+  }
+};
+
+const removeBookmark = async (userId, postId) => {
+  try {
+    const user = await User.findById(userId);
+    const post = await Post.findById(postId);
+    const updatedBookmarks = user.bookmarks.filter(
+      ({ _id }) => _id.toHexString() !== post._id.toHexString()
+    );
+    user.bookmarks = updatedBookmarks;
+    await user.save();
+    return user;
+  } catch (error) {
+    console.error("Error removing bookmark", error);
+  }
+};
 
 module.exports = {
   signup,
@@ -107,6 +128,8 @@ module.exports = {
   getUserById,
   login,
   updateProfile,
-  //   followUser,
-  //   unfollowUser,
+  followUser,
+  unfollowUser,
+  addBookmark,
+  removeBookmark,
 };

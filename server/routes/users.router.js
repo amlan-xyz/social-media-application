@@ -11,6 +11,10 @@ const {
   getUserById,
   login,
   updateProfile,
+  followUser,
+  unfollowUser,
+  addBookmark,
+  removeBookmark,
 } = require("../controllers/users.controller");
 
 router.get("", async (req, res) => {
@@ -159,39 +163,84 @@ router.put("/profile/update", async (req, res) => {
   }
 });
 
-// router.post("/follow/:id", async (req, res) => {
-//   const { userId } = req.body;
-//   const followUserId = req.params.id;
+router.post("/follow/:id", async (req, res) => {
+  const { userId } = req.body;
+  const followUserId = req.params.id;
 
-//   try {
-//     const updatedUser = await followUser(userId, followUserId);
-//     if (updatedUser) {
-//       res
-//         .status(200)
-//         .json({ message: "User followed", data: { user: updatedUser } });
-//     } else {
-//       res.status(400).json({ message: "Failed to follow user" });
-//     }
-//   } catch (error) {
-//     res.status(500).json({ message: "Internal Server Error" });
-//   }
-// });
+  try {
+    const updatedUser = await followUser(userId, followUserId);
+    if (updatedUser) {
+      res.status(200).json({
+        message: "User followed",
+        data: { user: updatedUser.user, followUser: updatedUser.followUser },
+      });
+    } else {
+      res.status(400).json({ message: "Failed to follow user" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 
-// router.post("/unfollow/:id", async (req, res) => {
-//   const { userId } = req.body;
-//   const followUserId = req.params.id;
-//   try {
-//     const updatedUser = await unfollowUser(userId, followUserId);
-//     if (updatedUser) {
-//       res
-//         .status(200)
-//         .json({ message: "User unfollowed", data: { user: updatedUser } });
-//     } else {
-//       res.status(400).json({ message: "Failed to unfollow user" });
-//     }
-//   } catch (error) {
-//     res.status(500).json({ message: "Internal Server Error" });
-//   }
-// });
+router.post("/unfollow/:id", async (req, res) => {
+  const { userId } = req.body;
+  const unfollowUserId = req.params.id;
+  try {
+    const updatedUser = await unfollowUser(userId, unfollowUserId);
+    if (updatedUser) {
+      res.status(200).json({
+        message: "User unfollowed",
+        data: {
+          user: updatedUser.user,
+          unfollowUser: updatedUser.unfollowUser,
+        },
+      });
+    } else {
+      res.status(400).json({ message: "Failed to unfollow user" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+router.post("/bookmarks/:id/add", async (req, res) => {
+  const { userId } = req.body;
+  const postId = req.params.id;
+  try {
+    const updatedUser = await addBookmark(userId, postId);
+    if (updatedUser) {
+      res.status(200).json({
+        message: "Bookmark added",
+        data: {
+          user: updatedUser,
+        },
+      });
+    } else {
+      res.status(400).json({ message: "Failed to add bookmark" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+router.post("/bookmarks/:id/remove", async (req, res) => {
+  const { userId } = req.body;
+  const postId = req.params.id;
+  try {
+    const updatedUser = await removeBookmark(userId, postId);
+    if (updatedUser) {
+      res.status(200).json({
+        message: "Bookmark removed",
+        data: {
+          user: updatedUser,
+        },
+      });
+    } else {
+      res.status(400).json({ message: "Failed to remove bookmark" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 
 module.exports = router;
