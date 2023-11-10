@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-
+const jwt = require("jsonwebtoken");
+const JWT_SECRET = process.env.JWT_SECRET;
 //models
 const User = require("../models/users.model");
 
@@ -46,10 +47,14 @@ router.post("/signup", async (req, res) => {
     try {
       const newUser = await signup(userData);
       if (newUser) {
+        const token = jwt.sign({ userId: newUser._id }, JWT_SECRET, {
+          expiresIn: "24h",
+        });
         res.status(201).json({
           message: "Signup successful",
           data: {
             user: newUser,
+            token,
           },
         });
       } else {
@@ -71,9 +76,15 @@ router.post("/login", async (req, res) => {
     try {
       const loggedInUser = await login(user, password);
       if (loggedInUser) {
+        const token = jwt.sign({ userId: loggedInUser._id }, JWT_SECRET, {
+          expiresIn: "24h",
+        });
         res
           .status(200)
-          .json({ message: "Login successful", data: { user: loggedInUser } });
+          .json({
+            message: "Login successful",
+            data: { user: loggedInUser, token },
+          });
       } else {
         res.status(401).json({ message: "Incorrect Credentials" });
       }

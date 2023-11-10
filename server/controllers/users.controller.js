@@ -1,14 +1,17 @@
+const bcrypt = require("bcrypt");
 const Post = require("../models/posts.model");
 const User = require("../models/users.model");
 
 const signup = async (userData) => {
   const { username, name, email, password } = userData;
   try {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
     const user = {
       username,
       name,
       email,
-      password,
+      password: hashedPassword,
     };
     const newUser = new User(user);
     const savedUser = await newUser.save();
@@ -38,7 +41,7 @@ const getUserById = async (userId) => {
 
 const login = async (user, password) => {
   try {
-    const passwordMatched = user.password === password;
+    const passwordMatched = await bcrypt.compare(password, user.password);
     if (passwordMatched) {
       return user;
     } else {
