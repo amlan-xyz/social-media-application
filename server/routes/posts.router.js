@@ -22,7 +22,7 @@ router.post("", authVerify, async (req, res) => {
     if (newPost) {
       res.status(201).json({
         message: "Post created",
-        data: { post: newPost },
+        post: newPost,
       });
     } else {
       res.status(400).json({ message: "Post creation failed" });
@@ -38,9 +38,7 @@ router.get("", async (req, res) => {
     if (posts) {
       res.status(200).json({
         message: "Posts found",
-        data: {
-          posts,
-        },
+        posts,
       });
     } else {
       res.status(404).json({ message: "Posts not found" });
@@ -57,9 +55,7 @@ router.get("/:id", async (req, res) => {
     if (post) {
       res.status(200).json({
         message: "Post found",
-        data: {
-          post,
-        },
+        post,
       });
     } else {
       res.status(404).json({ message: "Post not found" });
@@ -76,9 +72,7 @@ router.delete("/:id", async (req, res) => {
     if (deletedPost) {
       res.status(200).json({
         message: "Post deleted",
-        data: {
-          post: deletedPost,
-        },
+        post: deletedPost,
       });
     } else {
       res.status(404).json({ message: "Post not found" });
@@ -96,9 +90,7 @@ router.put("/:id", async (req, res) => {
     if (updatedPost) {
       res.status(200).json({
         message: "Post updated",
-        data: {
-          post: updatedPost,
-        },
+        post: updatedPost,
       });
     } else {
       res.status(404).json({ message: "Post not found" });
@@ -116,9 +108,7 @@ router.post("/:id/like", authVerify, async (req, res) => {
     if (likedPost) {
       res.status(200).json({
         message: "Post liked",
-        data: {
-          post: likedPost,
-        },
+        post: likedPost,
       });
     } else {
       res.status(400).json({ message: "Failed to like post" });
@@ -136,9 +126,7 @@ router.post("/:id/unlike", authVerify, async (req, res) => {
     if (unlikedPost) {
       res.status(200).json({
         message: "Post unliked",
-        data: {
-          post: unlikedPost,
-        },
+        post: unlikedPost,
       });
     } else {
       res.status(400).json({ message: "Failed to unlike post" });

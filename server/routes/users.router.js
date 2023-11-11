@@ -25,9 +25,7 @@ router.get("", async (req, res) => {
     if (allUsers) {
       res.status(200).json({
         message: "Users data",
-        data: {
-          users: allUsers,
-        },
+        users: allUsers,
       });
     } else {
       res.status(404).json({ message: "Users not found" });
@@ -53,10 +51,8 @@ router.post("/signup", async (req, res) => {
         });
         res.status(201).json({
           message: "Signup successful",
-          data: {
-            user: newUser,
-            token,
-          },
+          user: newUser,
+          token,
         });
       } else {
         res.status(400).json({ message: "Signup failed" });
@@ -82,7 +78,8 @@ router.post("/login", async (req, res) => {
         });
         res.status(200).json({
           message: "Login successful",
-          data: { user: loggedInUser, token },
+          user: loggedInUser,
+          token,
         });
       } else {
         res.status(401).json({ message: "Incorrect Credentials" });
@@ -109,9 +106,7 @@ router.get("/profile", authVerify, async (req, res) => {
       };
       res.status(200).json({
         message: "User profile",
-        data: {
-          profile,
-        },
+        profile,
       });
     } else {
       throw "Invalid user, Please login again";
@@ -128,9 +123,7 @@ router.get("/:id", async (req, res) => {
     if (user) {
       res.status(200).json({
         message: "User found",
-        data: {
-          user,
-        },
+        user,
       });
     } else {
       res.status(404).json({ message: "User not found" });
@@ -159,9 +152,7 @@ router.put("/profile/update", authVerify, async (req, res) => {
         };
         res.status(200).json({
           message: "User profile updated",
-          data: {
-            profile,
-          },
+          profile,
         });
       } else {
         res.status(400).json({ message: "User profile updation failed" });
@@ -183,7 +174,8 @@ router.post("/follow/:id", authVerify, async (req, res) => {
     if (updatedUser) {
       res.status(200).json({
         message: "User followed",
-        data: { user: updatedUser.user, followUser: updatedUser.followUser },
+        user: updatedUser.user,
+        followUser: updatedUser.followUser,
       });
     } else {
       res.status(400).json({ message: "Failed to follow user" });
@@ -201,10 +193,8 @@ router.post("/unfollow/:id", authVerify, async (req, res) => {
     if (updatedUser) {
       res.status(200).json({
         message: "User unfollowed",
-        data: {
-          user: updatedUser.user,
-          unfollowUser: updatedUser.unfollowUser,
-        },
+        user: updatedUser.user,
+        unfollowUser: updatedUser.unfollowUser,
       });
     } else {
       res.status(400).json({ message: "Failed to unfollow user" });
@@ -222,9 +212,7 @@ router.post("/bookmarks/:id/add", authVerify, async (req, res) => {
     if (updatedUser) {
       res.status(200).json({
         message: "Bookmark added",
-        data: {
-          user: updatedUser,
-        },
+        user: updatedUser,
       });
     } else {
       res.status(400).json({ message: "Failed to add bookmark" });
@@ -242,9 +230,7 @@ router.post("/bookmarks/:id/remove", authVerify, async (req, res) => {
     if (updatedUser) {
       res.status(200).json({
         message: "Bookmark removed",
-        data: {
-          user: updatedUser,
-        },
+        user: updatedUser,
       });
     } else {
       res.status(400).json({ message: "Failed to remove bookmark" });
