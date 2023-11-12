@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createUser, fetchUsers } from "./userAPI";
+import { fetchUsers } from "./userAPI";
 
 const initialState = {
   users: [],
@@ -11,14 +11,6 @@ export const getUsersAsync = createAsyncThunk("user/fetchUsers", async () => {
   const response = await fetchUsers();
   return response.data;
 });
-
-export const addUserAsync = createAsyncThunk(
-  "user/createUserAsync",
-  async (userData) => {
-    const response = await createUser(userData);
-    return response.data;
-  }
-);
 
 const userSlice = createSlice({
   name: "user",
@@ -33,17 +25,6 @@ const userSlice = createSlice({
       state.status = "success";
     },
     [fetchUsers.rejected]: (state, action) => {
-      state.status = "error";
-      state.error = action.error.message;
-    },
-    [addUserAsync.pending]: (state) => {
-      state.status = "loading";
-    },
-    [addUserAsync.fulfilled]: (state, action) => {
-      state.status = "success";
-      state.users.push(action.payload);
-    },
-    [addUserAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
     },

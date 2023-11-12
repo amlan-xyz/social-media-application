@@ -8,9 +8,3 @@ export const fetchUsers = async () => {
   console.log(response);
   return response;
 };
-
-export const createUser = async (userData) => {
-  const response = await axios.post(`${api}/signup`, userData);
-  console.log(response);
-  return response;
-};

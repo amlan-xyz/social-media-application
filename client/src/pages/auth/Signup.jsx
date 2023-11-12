@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addUserAsync } from "../../features/user/userSlice";
+import { Link } from "react-router-dom";
+import { signupUserAsync } from "../../features/auth/authSlice";
 import "./Auth.css";
+
 export const Signup = () => {
   const [form, setForm] = useState({});
   const dispatch = useDispatch();
   const handleSignup = (e) => {
     e.preventDefault();
-    dispatch(addUserAsync(form));
+    dispatch(signupUserAsync(form));
   };
   return (
     <div className="form__container">
       <h1>Signup Page</h1>
+      <Link to="/login">Login</Link>
       <form className="form__body">
         <div className="form__item">
           <label htmlFor="username">Username</label>
