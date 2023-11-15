@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { loginUserAsync } from "../../features/auth/authSlice";
 import "./Auth.css";
 
@@ -9,11 +9,15 @@ export const Login = () => {
   const [password, setPassword] = useState([]);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     dispatch(loginUserAsync({ username, password }));
+    navigate(location?.state?.from?.pathname || "/");
   };
+
   return (
     <div className="form__container">
       <h1>Login Page</h1>

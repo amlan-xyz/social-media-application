@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "../../helper";
+import { BASE_URL } from "../../utils/baseUrl";
 
 const api = `${BASE_URL}/posts`;
 

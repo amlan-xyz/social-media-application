@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "../../helper";
+import { BASE_URL } from "../../utils/baseUrl";
 
 const api = `${BASE_URL}/users`;
 
@@ -12,5 +12,14 @@ export const createUser = async (userData) => {
 export const loginUser = async ({ username, password }) => {
   const response = await axios.post(`${api}/login`, { username, password });
   localStorage.setItem("token", response.data.token);
+  return response;
+};
+
+export const fetchProfile = async () => {
+  const response = await axios.get(`${api}/profile`, {
+    headers: {
+      authorization: localStorage.getItem("token"),
+    },
+  });
   return response;
 };
