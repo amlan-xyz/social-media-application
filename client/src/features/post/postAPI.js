@@ -8,6 +8,16 @@ export const fetchPosts = async () => {
   return response;
 };
 
+export const createPost = async (postData) => {
+  const response = await axios.post(api, postData, {
+    headers: {
+      authorization: localStorage.getItem("token"),
+    },
+  });
+
+  return response;
+};
+
 export const likePost = async (postId) => {
   const response = await fetch(`${api}/${postId}/like`, {
     method: "POST",
@@ -16,6 +26,7 @@ export const likePost = async (postId) => {
     },
   });
   const data = await response.json();
+  console.log(data);
   return data;
 };
 

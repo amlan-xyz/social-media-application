@@ -2,13 +2,11 @@ const Post = require("../models/posts.model");
 const User = require("../models/users.model");
 
 const createPost = async (userId, postData) => {
-  const { caption, image } = postData;
-
   try {
     const user = await User.findById(userId);
     const post = {
-      caption,
-      image,
+      caption: postData.caption,
+      image: postData.image,
       author: user,
     };
     const newPost = new Post(post);

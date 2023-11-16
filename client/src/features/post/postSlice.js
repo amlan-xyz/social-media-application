@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchPosts, likePost, unlikePost } from "./postAPI";
+import { createPost, fetchPosts, likePost, unlikePost } from "./postAPI";
 
 const initialState = {
   posts: [],
@@ -11,6 +11,14 @@ export const getPostsAsync = createAsyncThunk("post/fetchPosts", async () => {
   const { data } = await fetchPosts();
   return data.posts;
 });
+
+export const createPostAsync = createAsyncThunk(
+  "post/createPost",
+  async ({ caption, image }) => {
+    const { data } = await createPost({ caption, image });
+    return data.post;
+  }
+);
 
 export const likePostAsync = createAsyncThunk(
   "post/likePost",
@@ -41,6 +49,17 @@ const postSlice = createSlice({
       state.status = "success";
     },
     [getPostsAsync.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = action.error.message;
+    },
+    [createPostAsync.pending]: (state) => {
+      state.status = "loading";
+    },
+    [createPostAsync.fulfilled]: (state, action) => {
+      state.posts.push(action.payload);
+      state.status = "success";
+    },
+    [createPostAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
     },

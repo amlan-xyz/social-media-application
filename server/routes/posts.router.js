@@ -16,7 +16,7 @@ const { authVerify } = require("../middlewares/auth.middleware");
 
 router.post("", authVerify, async (req, res) => {
   const { userId } = req.user;
-  const { postData } = req.body;
+  const postData = req.body;
   try {
     const newPost = await createPost(userId, postData);
     if (newPost) {
