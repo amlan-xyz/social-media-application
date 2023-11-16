@@ -23,10 +23,9 @@ const createPost = async (userId, postData) => {
 
 const getAllPosts = async () => {
   try {
-    const posts = await Post.find().populate(
-      "author",
-      "_id username profle_img"
-    );
+    const posts = await Post.find()
+      .populate("author", "_id username profle_img")
+      .populate("likes", "_id username profle_img");
     return posts;
   } catch (error) {
     console.error("Error getting posts", error);
@@ -47,7 +46,9 @@ const getPostById = async (postId) => {
 const likePost = async (userId, postId) => {
   try {
     const user = await User.findById(userId);
-    const post = await Post.findById(postId);
+    const post = await Post.findById(postId)
+      .populate("likes", "_id username")
+      .populate("author");
     post.likes.push(user);
     await post.save();
     return post;
@@ -59,7 +60,9 @@ const likePost = async (userId, postId) => {
 const unlikePost = async (userId, postId) => {
   try {
     const user = await User.findById(userId);
-    const post = await Post.findById(postId).populate("likes", "_id username");
+    const post = await Post.findById(postId)
+      .populate("likes", "_id username")
+      .populate("author");
     const updatedLikes = post.likes.filter(
       ({ _id }) => _id.toHexString() !== user._id.toHexString()
     );

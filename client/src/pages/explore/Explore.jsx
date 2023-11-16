@@ -20,7 +20,7 @@ export const Explore = () => {
       <ul className="posts__list">
         {post?.posts?.map((post) => (
           <li key={post._id}>
-            <Post data={post} />
+            <Post postId={post._id} />
           </li>
         ))}
       </ul>

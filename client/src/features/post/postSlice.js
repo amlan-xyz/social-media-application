@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchPosts } from "./postAPI";
+import { fetchPosts, likePost, unlikePost } from "./postAPI";
 
 const initialState = {
   posts: [],
@@ -11,6 +11,22 @@ export const getPostsAsync = createAsyncThunk("post/fetchPosts", async () => {
   const { data } = await fetchPosts();
   return data.posts;
 });
+
+export const likePostAsync = createAsyncThunk(
+  "post/likePost",
+  async (postId) => {
+    const data = await likePost(postId);
+    return data.post;
+  }
+);
+
+export const unlikePostAsync = createAsyncThunk(
+  "post/unlikePost",
+  async (postId) => {
+    const data = await unlikePost(postId);
+    return data.post;
+  }
+);
 
 const postSlice = createSlice({
   name: "post",
@@ -27,6 +43,40 @@ const postSlice = createSlice({
     [getPostsAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
+    },
+    [likePostAsync.pending]: (state) => {
+      state.status = "loading";
+    },
+    [likePostAsync.fulfilled]: (state, action) => {
+      const updatedPost = action.payload;
+      const postIdx = state.posts.findIndex(
+        (post) => post._id === updatedPost._id
+      );
+      if (postIdx !== -1) {
+        state.posts[postIdx] = updatedPost;
+      }
+      state.status = "success";
+    },
+    [likePostAsync.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = "Error liking post";
+    },
+    [unlikePostAsync.pending]: (state) => {
+      state.status = "loading";
+    },
+    [unlikePostAsync.fulfilled]: (state, action) => {
+      const updatedPost = action.payload;
+      const postIdx = state.posts.findIndex(
+        (post) => post._id === updatedPost._id
+      );
+      if (postIdx !== -1) {
+        state.posts[postIdx] = updatedPost;
+      }
+      state.status = "success";
+    },
+    [unlikePostAsync.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = "Error unliking post";
     },
   },
 });

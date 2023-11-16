@@ -22,9 +22,16 @@ function App() {
               </RequiresAuth>
             }
           />
+          <Route
+            path="/explore"
+            element={
+              <RequiresAuth>
+                <Explore />
+              </RequiresAuth>
+            }
+          />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/explore" element={<Explore />} />
         </Routes>
       </div>
     </div>

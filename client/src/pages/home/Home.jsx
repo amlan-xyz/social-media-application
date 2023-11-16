@@ -13,7 +13,7 @@ export const Home = () => {
   const showPosts = posts.filter(
     ({ author }) =>
       author.username === user.username ||
-      user?.following.some((follower) => follower.username === author.username)
+      user?.following?.some((follower) => follower.username === author.username)
   );
 
   useEffect(() => {
@@ -25,11 +25,13 @@ export const Home = () => {
   return (
     <div className="container">
       <h1>Home page</h1>
-      <li>
+      <ul>
         {showPosts?.map((post) => (
-          <Post data={post} />
+          <li key={post._id}>
+            <Post data={post} />
+          </li>
         ))}
-      </li>
+      </ul>
     </div>
   );
 };
