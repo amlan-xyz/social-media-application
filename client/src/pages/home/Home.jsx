@@ -28,7 +28,7 @@ export const Home = () => {
       <ul>
         {showPosts?.map((post) => (
           <li key={post._id}>
-            <Post data={post} />
+            <Post postId={post._id} />
           </li>
         ))}
       </ul>

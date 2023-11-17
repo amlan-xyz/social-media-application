@@ -85,7 +85,9 @@ const updatePost = async (postId, updatedData) => {
   try {
     const updatedPost = await Post.findByIdAndUpdate(postId, updatedData, {
       new: true,
-    });
+    })
+      .populate("likes", "_id username")
+      .populate("author");
     return updatedPost;
   } catch (error) {
     console.error("Error updating post", error);

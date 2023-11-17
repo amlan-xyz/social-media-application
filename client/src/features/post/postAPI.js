@@ -18,6 +18,15 @@ export const createPost = async (postData) => {
   return response;
 };
 
+export const editPost = async (postId, postData) => {
+  const response = await axios.put(`${api}/${postId}`, postData, {
+    headers: {
+      authorization: localStorage.getItem("token"),
+    },
+  });
+  return response;
+};
+
 export const likePost = async (postId) => {
   const response = await fetch(`${api}/${postId}/like`, {
     method: "POST",
@@ -26,7 +35,6 @@ export const likePost = async (postId) => {
     },
   });
   const data = await response.json();
-  console.log(data);
   return data;
 };
 
@@ -39,4 +47,13 @@ export const unlikePost = async (postId) => {
   });
   const data = await response.json();
   return data;
+};
+
+export const deletePost = async (postId) => {
+  const response = await axios.delete(`${api}/${postId}`, {
+    headers: {
+      authorization: localStorage.getItem("token"),
+    },
+  });
+  return response;
 };

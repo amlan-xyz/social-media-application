@@ -1,5 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createPost, fetchPosts, likePost, unlikePost } from "./postAPI";
+import {
+  createPost,
+  deletePost,
+  editPost,
+  fetchPosts,
+  likePost,
+  unlikePost,
+} from "./postAPI";
 
 const initialState = {
   posts: [],
@@ -36,6 +43,22 @@ export const unlikePostAsync = createAsyncThunk(
   }
 );
 
+export const deletePostAsync = createAsyncThunk(
+  "post/deletePost",
+  async (postId) => {
+    const { data } = await deletePost(postId);
+    return data.post;
+  }
+);
+
+export const editPostAsync = createAsyncThunk(
+  "post/editPost",
+  async ({ postId, updatedData }) => {
+    const { data } = await editPost(postId, updatedData);
+    return data.post;
+  }
+);
+
 const postSlice = createSlice({
   name: "post",
   initialState,
@@ -62,6 +85,36 @@ const postSlice = createSlice({
     [createPostAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
+    },
+    [deletePostAsync.pending]: (state) => {
+      state.status = "loading";
+    },
+    [deletePostAsync.fulfilled]: (state, action) => {
+      state.posts = state.posts.filter(({ _id }) => _id !== action.payload._id);
+      state.status = "success";
+    },
+    [deletePostAsync.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = "Error deleting post";
+    },
+    [editPostAsync.pending]: (state) => {
+      state.status = "loading";
+    },
+    [editPostAsync.fulfilled]: (state, action) => {
+      const updatedPost = action.payload;
+      console.log(updatedPost);
+      const postIdx = state.posts.findIndex(
+        (post) => post._id === updatedPost._id
+      );
+      console.log(postIdx);
+      if (postIdx !== -1) {
+        state.posts[postIdx] = updatedPost;
+      }
+      state.status = "success";
+    },
+    [editPostAsync.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = "Error editing post";
     },
     [likePostAsync.pending]: (state) => {
       state.status = "loading";
