@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
+  addComment,
   createPost,
   deletePost,
   editPost,
   fetchPosts,
   likePost,
+  removeComment,
   unlikePost,
 } from "./postAPI";
 
@@ -59,6 +61,22 @@ export const editPostAsync = createAsyncThunk(
   }
 );
 
+export const addCommentAsync = createAsyncThunk(
+  "post/addComment",
+  async ({ postId, comment }) => {
+    const { data } = await addComment(postId, { newComment: comment });
+    return data.post;
+  }
+);
+
+export const removeCommentAsync = createAsyncThunk(
+  "post/removePost",
+  async ({ postId, commentId }) => {
+    const { data } = await removeComment(postId, commentId);
+    return data.post;
+  }
+);
+
 const postSlice = createSlice({
   name: "post",
   initialState,
@@ -102,11 +120,9 @@ const postSlice = createSlice({
     },
     [editPostAsync.fulfilled]: (state, action) => {
       const updatedPost = action.payload;
-      console.log(updatedPost);
       const postIdx = state.posts.findIndex(
         (post) => post._id === updatedPost._id
       );
-      console.log(postIdx);
       if (postIdx !== -1) {
         state.posts[postIdx] = updatedPost;
       }
@@ -149,6 +165,41 @@ const postSlice = createSlice({
     [unlikePostAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = "Error unliking post";
+    },
+    [addCommentAsync.pending]: (state) => {
+      state.status = "loading";
+    },
+    [addCommentAsync.fulfilled]: (state, action) => {
+      const updatedPost = action.payload;
+      console.log(updatedPost);
+      const postIdx = state.posts.findIndex(
+        (post) => post._id === updatedPost._id
+      );
+      if (postIdx !== -1) {
+        state.posts[postIdx] = updatedPost;
+      }
+      state.status = "success";
+    },
+    [addCommentAsync.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = action.error.message;
+    },
+    [removeCommentAsync.pending]: (state) => {
+      state.status = "loading";
+    },
+    [removeCommentAsync.fulfilled]: (state, action) => {
+      const updatedPost = action.payload;
+      const postIdx = state.posts.findIndex(
+        (post) => post._id === updatedPost._id
+      );
+      if (postIdx !== -1) {
+        state.posts[postIdx] = updatedPost;
+      }
+      state.status = "success";
+    },
+    [removeCommentAsync.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = action.error.message;
     },
   },
 });

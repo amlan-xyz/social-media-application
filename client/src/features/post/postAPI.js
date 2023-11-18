@@ -57,3 +57,29 @@ export const deletePost = async (postId) => {
   });
   return response;
 };
+
+export const addComment = async (postId, commentData) => {
+  const response = await axios.post(
+    `${api}/${postId}/comments/add`,
+    commentData,
+    {
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+    }
+  );
+  return response;
+};
+
+export const removeComment = async (postId, commentId) => {
+  const response = await axios.post(
+    `${api}/${postId}/comments/${commentId}/remove`,
+    {},
+    {
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+    }
+  );
+  return response;
+};

@@ -11,6 +11,8 @@ const {
   unlikePost,
   deletePost,
   updatePost,
+  addComment,
+  removeComment,
 } = require("../controllers/posts.controller");
 const { authVerify } = require("../middlewares/auth.middleware");
 
@@ -135,5 +137,41 @@ router.post("/:id/unlike", authVerify, async (req, res) => {
     res.status(500).json({ message: "Internal server error", error });
   }
 });
+
+router.post("/:id/comments/add", authVerify, async (req, res) => {
+  const { userId } = req.user;
+  const postId = req.params.id;
+  const commentData = req.body;
+  try {
+    const updatedPost = await addComment(userId, postId, commentData);
+    if (updatePost) {
+      res.status(200).json({ message: "Comment added", post: updatedPost });
+    } else {
+      res.status(400).json({ messsage: "Failed to add comment" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error", error });
+  }
+});
+
+router.post(
+  "/:post_id/comments/:comment_id/remove",
+  authVerify,
+  async (req, res) => {
+    const { userId } = req.user;
+    const postId = req.params.post_id;
+    const commentId = req.params.comment_id;
+    try {
+      const updatedPost = await removeComment(userId, postId, commentId);
+      if (updatedPost) {
+        res.status(200).json({ message: "Comment removed", post: updatedPost });
+      } else {
+        res.status(400).json({ message: "Failed to delete comment" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error", error });
+    }
+  }
+);
 
 module.exports = router;

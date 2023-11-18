@@ -8,6 +8,7 @@ import { Signup } from "./pages/auth/Signup";
 import { Bookmarks } from "./pages/bookmark/Bookmarks";
 import { Explore } from "./pages/explore/Explore";
 import { Home } from "./pages/home/Home";
+import { PostDetails } from "./pages/post/PostDetails";
 import { RequiresAuth } from "./utils/auth";
 
 function App() {
@@ -38,6 +39,14 @@ function App() {
             element={
               <RequiresAuth>
                 <Bookmarks />
+              </RequiresAuth>
+            }
+          />
+          <Route
+            path="/posts/:id"
+            element={
+              <RequiresAuth>
+                <PostDetails />
               </RequiresAuth>
             }
           />
