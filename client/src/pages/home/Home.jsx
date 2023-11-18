@@ -2,11 +2,13 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Post } from "../../components/Post/Post";
+import { fetchBookmarksAsync } from "../../features/bookmarks/bookmarkSlice";
 import { getPostsAsync } from "../../features/post/postSlice";
 import "./Home.css";
 export const Home = () => {
   const { posts, status } = useSelector((state) => state.post);
   const { user } = useSelector((state) => state.auth);
+  const bookmarkStatus = useSelector((state) => state.bookmark.status);
 
   const dispatch = useDispatch();
 
@@ -21,6 +23,12 @@ export const Home = () => {
       dispatch(getPostsAsync());
     }
   }, [status, dispatch]);
+
+  useEffect(() => {
+    if (bookmarkStatus === "idle") {
+      dispatch(fetchBookmarksAsync());
+    }
+  }, [dispatch, bookmarkStatus]);
 
   return (
     <div className="container">

@@ -104,7 +104,7 @@ const addBookmark = async (userId, postId) => {
     const post = await Post.findById(postId);
     user.bookmarks.push(post);
     await user.save();
-    return user;
+    return post;
   } catch (error) {
     console.error("Error adding bookmark", error);
   }
@@ -119,9 +119,18 @@ const removeBookmark = async (userId, postId) => {
     );
     user.bookmarks = updatedBookmarks;
     await user.save();
-    return user;
+    return post;
   } catch (error) {
     console.error("Error removing bookmark", error);
+  }
+};
+
+const getAllBookmarks = async (userId) => {
+  try {
+    const user = await User.findById(userId).populate("bookmarks");
+    return user.bookmarks;
+  } catch (error) {
+    console.log("Error getting bookmarks", error);
   }
 };
 
@@ -133,6 +142,7 @@ module.exports = {
   updateProfile,
   followUser,
   unfollowUser,
+  getAllBookmarks,
   addBookmark,
   removeBookmark,
 };

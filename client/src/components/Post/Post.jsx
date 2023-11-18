@@ -6,9 +6,16 @@ import {
   likePostAsync,
   unlikePostAsync,
 } from "../../features/post/postSlice";
+
+import {
+  addBookmarkAsync,
+  removeBookmarkAsync,
+} from "../../features/bookmarks/bookmarkSlice";
 import "./Post.css";
+
 export const Post = ({ postId }) => {
   const posts = useSelector((state) => state.post.posts);
+  const bookmarks = useSelector((state) => state.bookmark.bookmarks);
   const post = posts.find((post) => post._id === postId);
   const user = useSelector((state) => state.auth.user);
   const [editCaption, setEditCaption] = useState(post.caption);
@@ -41,6 +48,14 @@ export const Post = ({ postId }) => {
     setShowEditForm(!showEditForm);
   };
 
+  const addBookmark = (postId) => {
+    dispatch(addBookmarkAsync(postId));
+  };
+
+  const removeBookmark = (postId) => {
+    dispatch(removeBookmarkAsync(postId));
+  };
+
   return (
     <div className="post__container">
       <h3>{post.caption}</h3> ||
@@ -60,6 +75,14 @@ export const Post = ({ postId }) => {
         </>
       ) : (
         ""
+      )}
+      ||
+      {bookmarks.find(({ _id }) => _id === post._id) ? (
+        <button onClick={() => removeBookmark(post._id)}>
+          Remove bookmark
+        </button>
+      ) : (
+        <button onClick={() => addBookmark(post._id)}>Save</button>
       )}
       <>
         {showEditForm && (

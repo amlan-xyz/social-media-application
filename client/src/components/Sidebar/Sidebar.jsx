@@ -24,6 +24,11 @@ export const Sidebar = () => {
               Explore
             </Link>
           </li>
+          <li className="sidebar__item">
+            <Link className="sidebar__link" to="/bookmarks">
+              Bookmarks
+            </Link>
+          </li>
         </ul>
       </div>
       {showForm && (

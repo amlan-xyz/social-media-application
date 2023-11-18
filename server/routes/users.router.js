@@ -16,6 +16,7 @@ const {
   unfollowUser,
   addBookmark,
   removeBookmark,
+  getAllBookmarks,
 } = require("../controllers/users.controller");
 const { authVerify } = require("../middlewares/auth.middleware");
 
@@ -116,6 +117,20 @@ router.get("/profile", authVerify, async (req, res) => {
   }
 });
 
+router.get("/bookmarks", authVerify, async (req, res) => {
+  const { userId } = req.user;
+  try {
+    const bookmarks = await getAllBookmarks(userId);
+    if (bookmarks) {
+      res.status(200).json({ message: "Bookmarks found", bookmarks });
+    } else {
+      res.status(404).json({ message: "Bookmarks not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 router.get("/:id", async (req, res) => {
   const userId = req.params.id;
   try {
@@ -208,11 +223,11 @@ router.post("/bookmarks/:id/add", authVerify, async (req, res) => {
   const { userId } = req.user;
   const postId = req.params.id;
   try {
-    const updatedUser = await addBookmark(userId, postId);
-    if (updatedUser) {
+    const bookmark = await addBookmark(userId, postId);
+    if (bookmark) {
       res.status(200).json({
         message: "Bookmark added",
-        user: updatedUser,
+        bookmark,
       });
     } else {
       res.status(400).json({ message: "Failed to add bookmark" });
@@ -226,11 +241,11 @@ router.post("/bookmarks/:id/remove", authVerify, async (req, res) => {
   const { userId } = req.user;
   const postId = req.params.id;
   try {
-    const updatedUser = await removeBookmark(userId, postId);
-    if (updatedUser) {
+    const removedBookmark = await removeBookmark(userId, postId);
+    if (removedBookmark) {
       res.status(200).json({
         message: "Bookmark removed",
-        user: updatedUser,
+        bookmark: removedBookmark,
       });
     } else {
       res.status(400).json({ message: "Failed to remove bookmark" });

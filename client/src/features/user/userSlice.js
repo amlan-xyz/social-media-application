@@ -3,6 +3,7 @@ import { fetchUsers } from "./userAPI";
 
 const initialState = {
   users: [],
+  bookmarks: [],
   status: "idle",
   error: null,
 };

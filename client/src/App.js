@@ -5,6 +5,7 @@ import { Navbar } from "./components/Navbar/Navbar";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { Login } from "./pages/auth/Login";
 import { Signup } from "./pages/auth/Signup";
+import { Bookmarks } from "./pages/bookmark/Bookmarks";
 import { Explore } from "./pages/explore/Explore";
 import { Home } from "./pages/home/Home";
 import { RequiresAuth } from "./utils/auth";
@@ -29,6 +30,14 @@ function App() {
             element={
               <RequiresAuth>
                 <Explore />
+              </RequiresAuth>
+            }
+          />
+          <Route
+            path="/bookmarks"
+            element={
+              <RequiresAuth>
+                <Bookmarks />
               </RequiresAuth>
             }
           />
