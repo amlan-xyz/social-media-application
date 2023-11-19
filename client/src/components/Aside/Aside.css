@@ -1,0 +1,4 @@
+.aside__container {
+  grid-area: aside;
+  max-width: 300px;
+}

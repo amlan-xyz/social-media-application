@@ -2,4 +2,5 @@
   grid-area: sidebar;
   outline: solid red;
   height: 90vh;
+  width: 350px;
 }

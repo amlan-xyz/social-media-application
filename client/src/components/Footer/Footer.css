@@ -1,0 +1,5 @@
+.footer__container {
+  outline: solid blue;
+  height: 15vh;
+  grid-area: footer;
+}

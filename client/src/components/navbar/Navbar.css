@@ -3,11 +3,28 @@
   justify-content: space-between;
   align-items: center;
   grid-area: nav;
-  outline: solid;
   height: 10vh;
+  position: sticky;
+  top: 0;
+  background-color: var(--secondary-color);
+  padding: 0 3rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.nav__header {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
 }
 
 .nav__body {
   display: flex;
   gap: 1rem;
+}
+
+.nav__link {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
 }

@@ -1,23 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap");
+
+:root {
+  --primary-color: #3f8d7b;
+  --secondary-color: #bcd7e1;
+  --background-color: #edf7f0;
+  --accent-color: #417b90;
+  --text-color: #0b190f;
+  --shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
+    rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  --font-light: 200;
+  --font-regular: 400;
+  --font-bold: 600;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  font-weight: var(--font-regular);
 }
 
 ul {
   list-style: none;
-}
-
-.main {
-  display: grid;
-  grid-template-areas:
-    "nav nav nav"
-    "sidebar content content";
-}
-
-.main__body {
-  outline: solid grey;
-  grid-area: content;
 }
 
 .modal_wrapper {
