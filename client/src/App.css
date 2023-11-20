@@ -1,23 +1,30 @@
-.main {
+.container {
   display: grid;
   grid-template-areas:
-    "nav nav  nav"
-    "sidebar content aside"
-    "footer footer footer";
+    "nav"
+    "body";
 }
 
-.main__body {
-  outline: solid grey;
+.body {
+  grid-area: body;
+}
+
+.layout {
+  display: grid;
+  grid-template-areas: "sidebar content aside";
+}
+
+.content {
+  padding-top: 2rem;
+  width: 768px;
   grid-area: content;
 }
 
 @media (max-width: 425px) {
-  .main {
+  .layout {
     grid-template-areas:
-      "nav  "
       "aside "
       "content "
-      "sidebar "
-      "footer";
+      "sidebar ";
   }
 }

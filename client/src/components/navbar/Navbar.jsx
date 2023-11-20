@@ -13,11 +13,14 @@ export const Navbar = () => {
   const handleLogout = () => {
     dispatch(logoutUser());
   };
+
   return (
     <div className="navbar">
       <header className="nav__header">
-        Social
-        <IoShareSocialOutline />
+        <NavLink className="no__decoration" to="/">
+          Social
+          <IoShareSocialOutline />
+        </NavLink>
       </header>
 
       <ul className="nav__body">

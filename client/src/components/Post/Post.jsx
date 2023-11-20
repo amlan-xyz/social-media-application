@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   addCommentAsync,
   deletePostAsync,
@@ -8,11 +9,20 @@ import {
   unlikePostAsync,
 } from "../../features/post/postSlice";
 
-import { Link } from "react-router-dom";
 import {
   addBookmarkAsync,
   removeBookmarkAsync,
 } from "../../features/bookmarks/bookmarkSlice";
+
+//icons
+import {
+  FaBookmark,
+  FaHeart,
+  FaRegBookmark,
+  FaRegCommentAlt,
+  FaRegHeart,
+} from "react-icons/fa";
+import { MdDelete, MdEdit } from "react-icons/md";
 import "./Post.css";
 
 export const Post = ({ postId }) => {
@@ -73,38 +83,74 @@ export const Post = ({ postId }) => {
 
   return (
     <div className="post__container">
-      <h3>{post.caption}</h3> ||
-      <small>by:- {post.author.username}</small> ||
-      <p>Likes : {post.likes.length}</p> ||
-      {post.likes.find(({ username }) => username === user.username) ? (
-        <button onClick={() => handleUnLike(post._id)}>Unlike</button>
-      ) : (
-        <button onClick={() => handleLike(post._id)}>Like</button>
-      )}
-      ||
-      {user.username === post.author.username ? (
-        <>
-          <button onClick={() => handleDelete(post._id)}>Delete</button>
-          ||
-          <button onClick={toggleForm}>Edit</button>
-        </>
-      ) : (
-        ""
-      )}
-      ||
-      {bookmarks.find(({ _id }) => _id === post._id) ? (
-        <button onClick={() => removeBookmark(post._id)}>
-          Remove bookmark
-        </button>
-      ) : (
-        <button onClick={() => addBookmark(post._id)}>Save</button>
-      )}
-      ||
-      <>
-        <button onClick={toggleCommentBox}>Comment</button>
-        ||
-        <Link to={`/posts/${post._id}`}>View comments</Link>
-      </>
+      <div className="post__header">
+        <div className="post__header-content">
+          <img
+            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
+            alt="woman profile"
+          />
+          <p>{post.author.username}. </p>
+          <small>3h</small>
+        </div>
+        {user.username === post.author.username ? (
+          <div className="post__header-btns">
+            <button onClick={toggleForm}>
+              <MdEdit />
+            </button>
+            <button onClick={() => handleDelete(post._id)}>
+              <MdDelete />
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
+      <div className="post__body">
+        <img
+          className="post__img"
+          src="https://images.unsplash.com/photo-1613323593608-abc90fec84ff?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
+          alt="a man in snow"
+        />
+        <div className="post__body-btns">
+          <span>
+            {post.likes.find(({ username }) => username === user.username) ? (
+              <button onClick={() => handleUnLike(post._id)}>
+                <FaHeart className="fill__red" />
+              </button>
+            ) : (
+              <button onClick={() => handleLike(post._id)}>
+                <FaRegHeart />
+              </button>
+            )}
+            <button onClick={toggleCommentBox}>
+              <FaRegCommentAlt />
+            </button>
+          </span>
+
+          {bookmarks.find(({ _id }) => _id === post._id) ? (
+            <button onClick={() => removeBookmark(post._id)}>
+              <FaBookmark className="fill__accent" />
+            </button>
+          ) : (
+            <button onClick={() => addBookmark(post._id)}>
+              <FaRegBookmark />
+            </button>
+          )}
+        </div>
+        <div className="post__body-content">
+          <p>{post.likes.length} likes.</p>
+          <p>
+            <span className="font__bold">{post.author.username}</span>
+            {"  "}
+            {post.caption}
+          </p>
+          <Link to={`/posts/${post._id}`}>
+            View all {post.comments.length > 1 ? post.comments.length : ""}{" "}
+            comments
+          </Link>
+        </div>
+      </div>
+      <></>
       <>
         {showEditForm && (
           <div className="modal">

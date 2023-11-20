@@ -1,5 +1,78 @@
 .post__container {
   display: flex;
   gap: 1rem;
+  flex-direction: column;
+  box-shadow: var(--shadow);
+  background-color: var(--secondary-color);
+  padding: 2rem;
+}
+
+.post__header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+}
+
+.post__header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.post__header-content img {
+  width: 30px;
+  aspect-ratio: 1;
+  border-radius: 100%;
+}
+
+.post__header-btns {
+  display: flex;
+  gap: 1rem;
+}
+
+.post__header button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+}
+
+/* at small with make object fit contain */
+
+.post__img {
+  width: 700px;
+  height: 400px;
+  object-fit: cover;
+  margin: 0.5rem 0;
+}
+
+.post__body-btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.post__body-btns span {
+  display: flex;
+  gap: 2rem;
+}
+
+.post__body-btns button {
+  border: none;
+  background: none;
+  font-size: 1.2rem;
+}
+
+.post__body-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fill__red {
+  fill: red;
+}
+
+.fill__accent {
+  fill: var(--accent-color);
 }
