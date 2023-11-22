@@ -171,7 +171,6 @@ const postSlice = createSlice({
     },
     [addCommentAsync.fulfilled]: (state, action) => {
       const updatedPost = action.payload;
-      console.log(updatedPost);
       const postIdx = state.posts.findIndex(
         (post) => post._id === updatedPost._id
       );

@@ -15,6 +15,7 @@ import {
 } from "../../features/bookmarks/bookmarkSlice";
 
 //icons
+import { AiOutlineClose } from "react-icons/ai";
 import {
   FaBookmark,
   FaHeart,
@@ -55,11 +56,11 @@ export const Post = ({ postId }) => {
     };
     dispatch(editPostAsync({ postId: post._id, updatedData }));
     toggleForm();
+    setEditCaption("");
   };
 
   const toggleForm = () => {
     setShowEditForm(!showEditForm);
-    setEditCaption("");
   };
 
   const addBookmark = (postId) => {
@@ -74,11 +75,11 @@ export const Post = ({ postId }) => {
     e.preventDefault();
     dispatch(addCommentAsync({ postId: post._id, comment: commentText }));
     toggleCommentBox();
+    setCommentText("");
   };
 
   const toggleCommentBox = () => {
     setShowCommentBox(!showCommentBox);
-    setCommentText("");
   };
 
   return (
@@ -156,20 +157,29 @@ export const Post = ({ postId }) => {
           <div className="modal">
             <div className="modal_wrapper"></div>
             <div className="modal_container">
-              <button onClick={toggleForm}>Close</button>
-              <form action="">
-                <div className="form__item">
-                  <label htmlFor="caption">Caption</label>
-                  <input
-                    type="text"
-                    value={editCaption}
-                    onChange={(e) => setEditCaption(e.target.value)}
-                  />
+              <div className="post__form-container">
+                <div className="post__form-header">
+                  <button onClick={toggleForm}>
+                    <AiOutlineClose />
+                  </button>
                 </div>
-                <div className="form__item">
-                  <button onClick={handleEdit}>Edit</button>
-                </div>
-              </form>
+                <form className="post__form-body">
+                  <div className="post__form-item">
+                    <label htmlFor="caption">Edit Caption</label>
+                    <input
+                      type="text"
+                      onChange={(e) => setEditCaption(e.target.value)}
+                      placeholder={editCaption}
+                      value={editCaption}
+                    />
+                  </div>
+                  <div className="post__form-item">
+                    <button className="submit__btn" onClick={handleEdit}>
+                      Edit
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         )}
@@ -179,20 +189,29 @@ export const Post = ({ postId }) => {
           <div className="modal">
             <div className="modal_wrapper"></div>
             <div className="modal_container">
-              <button onClick={toggleCommentBox}>Close</button>
-              <form action="">
-                <div className="form__item">
-                  <label htmlFor="comment">Comment</label>
-                  <input
-                    type="text"
-                    value={commentText}
-                    onChange={(e) => setCommentText(e.target.value)}
-                  />
+              <div className="post__form-container">
+                <div className="post__form-header">
+                  <button onClick={toggleCommentBox}>
+                    <AiOutlineClose />
+                  </button>
                 </div>
-                <div className="form__item">
-                  <button onClick={handleComment}>Submit</button>
-                </div>
-              </form>
+                <form className="post__form-body">
+                  <div className="post__form-item">
+                    <label htmlFor="comment">Comment</label>
+                    <input
+                      type="text"
+                      value={commentText}
+                      onChange={(e) => setCommentText(e.target.value)}
+                      placeholder="Comment your thoughts...."
+                    />
+                  </div>
+                  <div className="post__form-item">
+                    <button className="submit__btn" onClick={handleComment}>
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         )}

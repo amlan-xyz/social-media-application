@@ -37,7 +37,7 @@ export const Home = () => {
       <Sidebar />
       <section className="content">
         <div className="home__container">
-          <ul className="home__list">
+          <ul className="post__list">
             {showPosts?.map((post) => (
               <li className="home__item" key={post._id}>
                 <Post postId={post._id} />

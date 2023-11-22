@@ -59,3 +59,10 @@ ul {
 .no__decoration {
   text-decoration: none;
 }
+
+.submit__btn {
+  padding: 0.5rem;
+  background-color: var(--secondary-color);
+  border: none;
+  box-shadow: var(--shadow);
+}
