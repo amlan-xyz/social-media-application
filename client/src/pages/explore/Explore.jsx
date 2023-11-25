@@ -21,8 +21,7 @@ export const Explore = () => {
       <Sidebar />
       <section className="content">
         <div className="explore__container">
-          <h1>Explore page</h1>
-          <ul className="posts__list">
+          <ul className="post__list">
             {post?.posts?.map((post) => (
               <li key={post._id}>
                 <Post postId={post._id} />

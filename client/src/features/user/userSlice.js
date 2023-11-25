@@ -1,31 +1,134 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchUsers } from "./userAPI";
+import {
+  createUser,
+  fetchProfile,
+  fetchUsers,
+  followUser,
+  loginUser,
+  updateProfile,
+} from "./userAPI";
 
 const initialState = {
-  users: [],
-  bookmarks: [],
   status: "idle",
+  token: localStorage.getItem("token") || null,
+  user: {},
+  users: [],
   error: null,
 };
 
-export const getUsersAsync = createAsyncThunk("user/fetchUsers", async () => {
-  const response = await fetchUsers();
-  return response.data;
+export const signupUserAsync = createAsyncThunk(
+  "user/signupAsync",
+  async (userData) => {
+    const { data } = await createUser(userData);
+    return data.user;
+  }
+);
+
+export const loginUserAsync = createAsyncThunk(
+  "user/loginAsync",
+  async ({ username, password }) => {
+    const { data } = await loginUser({ username, password });
+    return data.user;
+  }
+);
+
+export const followUserAsync = createAsyncThunk(
+  "user/followUser",
+  async (userId) => {
+    const { data } = await followUser(userId);
+    console.log(data);
+  }
+);
+
+export const getProfileAsync = createAsyncThunk("user/getProfile", async () => {
+  const { data } = await fetchProfile();
+  return data.profile;
 });
+
+export const getUsersAsync = createAsyncThunk("user/fetchUsers", async () => {
+  const { data } = await fetchUsers();
+  return data.users;
+});
+
+export const editProfileAsync = createAsyncThunk(
+  "user/editProfile",
+  async (updatedData) => {
+    const { data } = await updateProfile(updatedData);
+    return data.profile;
+  }
+);
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    logoutUser: (state) => {
+      localStorage.removeItem("token");
+      state.token = null;
+      state.user = null;
+      state.status = "logged_out";
+    },
+  },
   extraReducers: {
-    [fetchUsers.pending]: (state) => {
+    [getUsersAsync.pending]: (state) => {
       state.status = "loading";
     },
-    [fetchUsers.fulfilled]: (state, action) => {
+    [getUsersAsync.fulfilled]: (state, action) => {
       state.users = action.payload;
       state.status = "success";
     },
-    [fetchUsers.rejected]: (state, action) => {
+    [getUsersAsync.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = action.error.message;
+    },
+    [signupUserAsync.pending]: (state) => {
+      state.status = "loading";
+    },
+    [signupUserAsync.fulfilled]: (state, action) => {
+      state.status = "logged_in";
+      state.user = action.payload;
+    },
+    [signupUserAsync.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = action.error.message;
+    },
+    [loginUserAsync.pending]: (state) => {
+      state.status = "loading";
+    },
+    [loginUserAsync.fulfilled]: (state, action) => {
+      state.status = "logged_in";
+      state.user = action.payload;
+    },
+    [loginUserAsync.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = action.error.message;
+    },
+    [getProfileAsync.pending]: (state) => {
+      state.status = "loading";
+    },
+    [getProfileAsync.fulfilled]: (state, action) => {
+      state.status = "logged_in";
+      state.user = action.payload;
+    },
+    [getProfileAsync.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = action.error.message;
+    },
+    [editProfileAsync.pending]: (state) => {
+      state.status = "loading";
+    },
+    [editProfileAsync.fulfilled]: (state, action) => {
+      state.status = "success";
+      const updatedUser = action.payload;
+      const userIdx = state.users.findIndex(
+        ({ username }) => username === updatedUser.username
+      );
+      if (userIdx !== -1) {
+        state.users[userIdx] = updatedUser;
+      }
+      state.user = updatedUser;
+    },
+    [editProfileAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
     },
@@ -33,3 +136,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+export const { logoutUser } = userSlice.actions;

@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Aside } from "../../components/Aside/Aside";
 import { Post } from "../../components/Post/Post";
+import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { fetchBookmarksAsync } from "../../features/bookmarks/bookmarkSlice";
 export const Bookmarks = () => {
   const { bookmarks, status } = useSelector((state) => state.bookmark);
@@ -11,15 +13,18 @@ export const Bookmarks = () => {
   }, [dispatch, status]);
 
   return (
-    <div className="bookmarks">
-      <h1>Bookmarks</h1>
-      <ul>
-        {bookmarks?.map((post) => (
-          <li key={post._id}>
-            <Post postId={post._id} />
-          </li>
-        ))}
-      </ul>
+    <div className="layout">
+      <Sidebar />
+      <section className="content">
+        <ul className="post__list">
+          {bookmarks?.map((post) => (
+            <li key={post._id}>
+              <Post postId={post._id} />
+            </li>
+          ))}
+        </ul>
+      </section>
+      <Aside />
     </div>
   );
 };

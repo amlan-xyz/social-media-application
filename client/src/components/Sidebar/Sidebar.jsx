@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { NewPost } from "../Forms/NewPost";
+import { createPostAsync } from "../../features/post/postSlice";
 
 //icons
+import { AiOutlineClose } from "react-icons/ai";
 import { FaCompass, FaHome, FaUser } from "react-icons/fa";
 import { IoBookmarkSharp } from "react-icons/io5";
 
@@ -10,8 +12,26 @@ import "./Sidebar.css";
 export const Sidebar = () => {
   const [showForm, setShowForm] = useState(false);
 
+  const { user } = useSelector((state) => state.user);
+
   const toggleForm = () => {
     setShowForm(!showForm);
+  };
+
+  const dispatch = useDispatch();
+  const [caption, setCaption] = useState("");
+  const [image, setImage] = useState("");
+
+  const handleForm = (e) => {
+    e.preventDefault();
+    dispatch(
+      createPostAsync({
+        caption,
+        image,
+      })
+    );
+    setCaption("");
+    setImage("");
   };
 
   return (
@@ -40,7 +60,7 @@ export const Sidebar = () => {
               </Link>
             </li>
             <li className="sidebar__item">
-              <Link className="sidebar__link" to="/profile">
+              <Link className="sidebar__link" to={`/profile/${user?.username}`}>
                 <FaUser />
                 <span>Profile</span>
               </Link>
@@ -63,8 +83,38 @@ export const Sidebar = () => {
         <div className="modal">
           <div className="modal_wrapper"></div>
           <div className="modal_container">
-            <button onClick={toggleForm}>Close</button>
-            <NewPost />
+            <div className="post__form-container ">
+              <div className="post__form-header">
+                <button onClick={toggleForm}>
+                  <AiOutlineClose />
+                </button>
+              </div>
+              <form className="post__form-body">
+                <div className="post__form-item">
+                  <label htmlFor="caption">Caption</label>
+                  <input
+                    type="text"
+                    id="caption"
+                    onChange={(e) => setCaption(e.target.value)}
+                    value={caption}
+                  />
+                </div>
+                <div className="post__form-item">
+                  <label htmlFor="image">Image</label>
+                  <input
+                    type="text"
+                    id="image"
+                    onChange={(e) => setImage(e.target.value)}
+                    value={image}
+                  />
+                </div>
+                <div className="post__form-item">
+                  <button className="submit__btn" onClick={handleForm}>
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       )}

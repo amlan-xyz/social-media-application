@@ -9,15 +9,17 @@ import { getPostsAsync } from "../../features/post/postSlice";
 import "./Home.css";
 export const Home = () => {
   const { posts, status } = useSelector((state) => state.post);
-  const { user } = useSelector((state) => state.auth);
+  const userState = useSelector((state) => state.user);
   const bookmarkStatus = useSelector((state) => state.bookmark.status);
 
   const dispatch = useDispatch();
 
   const showPosts = posts.filter(
     ({ author }) =>
-      author.username === user.username ||
-      user?.following?.some((follower) => follower.username === author.username)
+      author.username === userState.user.username ||
+      userState.user?.following?.some(
+        (follower) => follower.username === author.username
+      )
   );
 
   useEffect(() => {

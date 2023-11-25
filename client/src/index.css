@@ -66,3 +66,9 @@ ul {
   border: none;
   box-shadow: var(--shadow);
 }
+
+.primary__btn {
+  background-color: var(--secondary-color);
+  padding: 0.2rem 0.5rem;
+  border: none;
+}

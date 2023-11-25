@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { logoutUser } from "../../features/auth/authSlice";
+import { logoutUser } from "../../features/user/userSlice";
 
 //icons
 import { CiLogin, CiLogout } from "react-icons/ci";
@@ -9,7 +9,7 @@ import { IoShareSocialOutline } from "react-icons/io5";
 import "./Navbar.css";
 export const Navbar = () => {
   const dispatch = useDispatch();
-  const { status } = useSelector((state) => state.auth);
+  const { status } = useSelector((state) => state.user);
   const handleLogout = () => {
     dispatch(logoutUser());
   };

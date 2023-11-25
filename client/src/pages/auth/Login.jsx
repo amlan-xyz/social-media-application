@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { loginUserAsync } from "../../features/auth/authSlice";
+import { loginUserAsync } from "../../features/user/userSlice";
 import "./Auth.css";
 
 export const Login = () => {

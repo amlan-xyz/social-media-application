@@ -23,7 +23,10 @@ const signup = async (userData) => {
 
 const getAllUsers = async () => {
   try {
-    const users = await User.find();
+    const users = await User.find()
+      .populate("followers")
+      .populate("following")
+      .populate("posts");
     return users;
   } catch (error) {
     console.error("Error geting users :-", error);

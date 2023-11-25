@@ -30,7 +30,7 @@ export const Post = ({ postId }) => {
   const posts = useSelector((state) => state.post.posts);
   const bookmarks = useSelector((state) => state.bookmark.bookmarks);
   const post = posts.find((post) => post._id === postId);
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.user.user);
   const [editCaption, setEditCaption] = useState(post.caption);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showCommentBox, setShowCommentBox] = useState(false);
@@ -90,7 +90,14 @@ export const Post = ({ postId }) => {
             src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
             alt="woman profile"
           />
-          <p>{post.author.username}. </p>
+          <p>
+            <Link
+              className="no__decoration"
+              to={`/profile/${post.author.username}`}
+            >
+              {post.author.username}.
+            </Link>
+          </p>
           <small>3h</small>
         </div>
         {user.username === post.author.username ? (
@@ -145,10 +152,14 @@ export const Post = ({ postId }) => {
             {"  "}
             {post.caption}
           </p>
-          <Link to={`/posts/${post._id}`}>
-            View all {post.comments.length > 1 ? post.comments.length : ""}{" "}
-            comments
-          </Link>
+          {post.comments.length > 0 ? (
+            <Link to={`/posts/${post._id}`}>
+              View all {post.comments.length > 1 ? post.comments.length : ""}{" "}
+              comments
+            </Link>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <></>

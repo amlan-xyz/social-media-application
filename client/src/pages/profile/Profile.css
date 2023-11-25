@@ -1,0 +1,38 @@
+.user__container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.user__body {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.profile__img {
+  width: 150px;
+  aspect-ratio: 1;
+  border-radius: 100%;
+}
+
+.user__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user__header h2 {
+  color: var(--accent-color);
+}
+
+.user__stats {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user__details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
