@@ -18,7 +18,7 @@ export const Aside = () => {
   return (
     <div className="aside__container">
       <div className="aside__header">
-        <p>Suggested for you</p>
+        <p>Suggestions</p>
         <Link className="aside__header-link" to="/users">
           See All
         </Link>

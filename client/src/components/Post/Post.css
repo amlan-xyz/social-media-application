@@ -119,3 +119,13 @@
   outline: none;
   border: none;
 }
+
+@media (max-width: 768px) {
+  .post__container {
+    padding: 1rem;
+  }
+  .post__img {
+    width: 489px;
+    height: 250px;
+  }
+}

@@ -20,6 +20,8 @@
   border-radius: 1rem;
   font-size: 1rem;
   margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
 }
 .sidebar__list {
   display: flex;
@@ -52,8 +54,31 @@
   aspect-ratio: 1;
 }
 
-/* @media (max-width: 425px) {
+@media (max-width: 768px) {
   .sidebar__container {
-    flex-direction: row;
+    width: 50px;
+    align-items: center;
+    height: 100vh;
   }
-} */
+
+  .sidebar__post-btn {
+    box-shadow: none;
+    width: 2rem;
+    background: none;
+    margin: 0 0 1rem 1rem;
+  }
+
+  .sidebar__link span {
+    display: none;
+  }
+
+  .sidebar__icon {
+    font-size: 2rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+  }
+
+  .sidebar__footer {
+    flex-direction: column;
+  }
+}

@@ -7,7 +7,7 @@ import { createPostAsync } from "../../features/post/postSlice";
 import { AiOutlineClose } from "react-icons/ai";
 import { FaCompass, FaHome, FaUser } from "react-icons/fa";
 import { IoBookmarkSharp } from "react-icons/io5";
-
+import { MdAddBox } from "react-icons/md";
 import "./Sidebar.css";
 export const Sidebar = () => {
   const [showForm, setShowForm] = useState(false);
@@ -38,30 +38,34 @@ export const Sidebar = () => {
     <>
       <div className="sidebar__container">
         <div className="sidebar__body">
-          <button className="sidebar__post-btn" onClick={toggleForm}>
+          <button
+            className="sidebar__post-btn sidebar__link"
+            onClick={toggleForm}
+          >
+            <MdAddBox className="sidebar__icon" />
             <span>Create post</span>
           </button>
           <ul className="sidebar__list">
             <li className="sidebar__item">
               <Link className="sidebar__link" to="/">
-                <FaHome /> <span>Home</span>
+                <FaHome className="sidebar__icon" /> <span>Home</span>
               </Link>
             </li>
             <li className="sidebar__item">
               <Link className="sidebar__link" to="/explore">
-                <FaCompass />
+                <FaCompass className="sidebar__icon" />
                 <span>Explore</span>
               </Link>
             </li>
             <li className="sidebar__item">
               <Link className="sidebar__link" to="/bookmarks">
-                <IoBookmarkSharp />
+                <IoBookmarkSharp className="sidebar__icon" />
                 <span>Bookmarks</span>
               </Link>
             </li>
             <li className="sidebar__item">
               <Link className="sidebar__link" to={`/profile/${user?.username}`}>
-                <FaUser />
+                <FaUser className="sidebar__icon" />
                 <span>Profile</span>
               </Link>
             </li>

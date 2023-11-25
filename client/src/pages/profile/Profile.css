@@ -36,3 +36,12 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+@media (max-width: 768px) {
+  .profile__img {
+    width: 120px;
+    aspect-ratio: 1;
+    border-radius: 100%;
+    margin-right: 2rem;
+  }
+}
