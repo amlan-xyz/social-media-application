@@ -1,7 +1,6 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Aside } from "../../components/Aside/Aside";
 import { Post } from "../../components/Post/Post";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 
@@ -76,7 +75,6 @@ export const Profile = () => {
           ))}
         </ul>
       </section>
-      <Aside />
       {showEdit && (
         <div className="modal">
           <div className="modal_wrapper"></div>

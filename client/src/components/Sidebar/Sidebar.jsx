@@ -38,14 +38,16 @@ export const Sidebar = () => {
     <>
       <div className="sidebar__container">
         <div className="sidebar__body">
-          <button
-            className="sidebar__post-btn sidebar__link"
-            onClick={toggleForm}
-          >
-            <MdAddBox className="sidebar__icon" />
-            <span>Create post</span>
-          </button>
           <ul className="sidebar__list">
+            <li className="sidebar__item">
+              <button
+                className="sidebar__post-btn sidebar__link"
+                onClick={toggleForm}
+              >
+                <MdAddBox className="sidebar__icon" />
+                <span>Create post</span>
+              </button>
+            </li>
             <li className="sidebar__item">
               <Link className="sidebar__link" to="/">
                 <FaHome className="sidebar__icon" /> <span>Home</span>
