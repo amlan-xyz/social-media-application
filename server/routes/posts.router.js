@@ -67,10 +67,11 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authVerify, async (req, res) => {
   const postId = req.params.id;
+  const { userId } = req.user;
   try {
-    const deletedPost = await deletePost(postId);
+    const deletedPost = await deletePost(userId, postId);
     if (deletedPost) {
       res.status(200).json({
         message: "Post deleted",
@@ -84,7 +85,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", authVerify, async (req, res) => {
   const postId = req.params.id;
   const updatedData = req.body;
   try {
