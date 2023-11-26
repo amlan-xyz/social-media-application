@@ -7,7 +7,13 @@ import "./Auth.css";
 export const Login = () => {
   const [username, setUsername] = useState([]);
   const [password, setPassword] = useState([]);
+  const [passwordType, setPasswordType] = useState("password");
 
+  const togglePasswordVisibility = () => {
+    setPasswordType((prevType) =>
+      prevType === "password" ? "text" : "password"
+    );
+  };
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,33 +24,68 @@ export const Login = () => {
     navigate(location?.state?.from?.pathname || "/");
   };
 
+  const handleGuestLogin = () => {
+    dispatch(loginUserAsync({ username: "guest_user", password: "guest" }));
+    navigate(location?.state?.from?.pathname || "/");
+  };
+
   return (
     <div className="form__container">
-      <h1>Login Page</h1>
-      <Link to="/signup">Signup</Link>
-      <form action="" className="form__body">
-        <div className="form__item">
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            onChange={(e) => setUsername(e.target.value)}
-            value={username}
-          />
+      <div className="form__content">
+        <div className="form__header">
+          <header>Login</header>
+          <hr />
         </div>
-        <div className="form__item">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
+
+        <form action="" className="form__body">
+          <div className="form__item">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
+              placeholder="Enter your username"
+            />
+          </div>
+          <div className="form__item">
+            <label htmlFor="password" className="password__show">
+              <span>Password</span>
+              <div className="">
+                <label htmlFor="show-hide">
+                  <small>Show</small>
+                </label>
+                <input
+                  onChange={togglePasswordVisibility}
+                  type="checkbox"
+                  id="show-hide"
+                />
+              </div>
+            </label>
+            <input
+              type={passwordType}
+              id="password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              placeholder="Enter your password"
+            />
+          </div>
+          <div className="form__item">
+            <button className="submit__btn" onClick={handleLogin}>
+              Signup
+            </button>
+          </div>
+        </form>
+        <div className="form__footer">
+          <p>
+            New user? <Link to="/signup">Signup</Link>
+          </p>
+
+          <button onClick={handleGuestLogin} className="btn__link">
+            Try Guest Mode
+          </button>
         </div>
-        <div className="form__item">
-          <button onClick={handleLogin}>Signup</button>
-        </div>
-      </form>
+      </div>
     </div>
   );
 };

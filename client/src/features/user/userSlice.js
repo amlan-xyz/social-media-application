@@ -61,7 +61,8 @@ const userSlice = createSlice({
       localStorage.removeItem("token");
       state.token = null;
       state.user = null;
-      state.status = "logged_out";
+      state.status = "idle";
+      state.isLoggedIn = false;
     },
   },
   extraReducers: {
