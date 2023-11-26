@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   createUser,
-  fetchProfile,
   fetchUsers,
   followUser,
   loginUser,
@@ -10,6 +9,7 @@ import {
 
 const initialState = {
   status: "idle",
+  isLoggedIn: false,
   token: localStorage.getItem("token") || null,
   user: {},
   users: [],
@@ -39,11 +39,6 @@ export const followUserAsync = createAsyncThunk(
     console.log(data);
   }
 );
-
-export const getProfileAsync = createAsyncThunk("user/getProfile", async () => {
-  const { data } = await fetchProfile();
-  return data.profile;
-});
 
 export const getUsersAsync = createAsyncThunk("user/fetchUsers", async () => {
   const { data } = await fetchUsers();
@@ -85,7 +80,7 @@ const userSlice = createSlice({
       state.status = "loading";
     },
     [signupUserAsync.fulfilled]: (state, action) => {
-      state.status = "logged_in";
+      state.isLoggedIn = true;
       state.user = action.payload;
     },
     [signupUserAsync.rejected]: (state, action) => {
@@ -96,24 +91,14 @@ const userSlice = createSlice({
       state.status = "loading";
     },
     [loginUserAsync.fulfilled]: (state, action) => {
-      state.status = "logged_in";
+      state.isLoggedIn = true;
       state.user = action.payload;
     },
     [loginUserAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
     },
-    [getProfileAsync.pending]: (state) => {
-      state.status = "loading";
-    },
-    [getProfileAsync.fulfilled]: (state, action) => {
-      state.status = "logged_in";
-      state.user = action.payload;
-    },
-    [getProfileAsync.rejected]: (state, action) => {
-      state.status = "error";
-      state.error = action.error.message;
-    },
+
     [editProfileAsync.pending]: (state) => {
       state.status = "loading";
     },

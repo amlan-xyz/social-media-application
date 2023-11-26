@@ -9,7 +9,7 @@ import { IoShareSocialOutline } from "react-icons/io5";
 import "./Navbar.css";
 export const Navbar = () => {
   const dispatch = useDispatch();
-  const { status } = useSelector((state) => state.user);
+  const { isLoggedIn } = useSelector((state) => state.user);
   const handleLogout = () => {
     dispatch(logoutUser());
   };
@@ -24,7 +24,7 @@ export const Navbar = () => {
       </header>
 
       <ul className="nav__body">
-        {status === "logged_in" ? (
+        {isLoggedIn ? (
           <>
             <li className="nav__item">
               <button className="nav__link" onClick={handleLogout}>

@@ -15,15 +15,6 @@ export const loginUser = async ({ username, password }) => {
   return response;
 };
 
-export const fetchProfile = async () => {
-  const response = await axios.get(`${api}/profile`, {
-    headers: {
-      authorization: localStorage.getItem("token"),
-    },
-  });
-  return response;
-};
-
 export const followUser = async (userId) => {
   const response = await axios.post(
     `${api}/follow/${userId}`,
