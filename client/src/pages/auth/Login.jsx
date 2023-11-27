@@ -20,13 +20,17 @@ export const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch(loginUserAsync({ username, password }));
-    navigate(location?.state?.from?.pathname || "/");
+    dispatch(loginUserAsync({ username, password })).then(() => {
+      navigate(location?.state?.from?.pathname || "/");
+    });
   };
 
-  const handleGuestLogin = () => {
-    dispatch(loginUserAsync({ username: "guest_user", password: "guest" }));
-    navigate(location?.state?.from?.pathname || "/");
+  const handleGuestLogin = async () => {
+    dispatch(loginUserAsync({ username: "guest_user", password: "1234" })).then(
+      () => {
+        navigate(location?.state?.from?.pathname || "/");
+      }
+    );
   };
 
   return (
@@ -72,7 +76,7 @@ export const Login = () => {
           </div>
           <div className="form__item">
             <button className="submit__btn" onClick={handleLogin}>
-              Signup
+              Login
             </button>
           </div>
         </form>

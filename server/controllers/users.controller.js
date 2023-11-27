@@ -24,8 +24,8 @@ const signup = async (userData) => {
 const getAllUsers = async () => {
   try {
     const users = await User.find()
-      .populate("followers")
-      .populate("following")
+      .populate("followers", "username")
+      .populate("following", "username")
       .populate("posts");
     return users;
   } catch (error) {
@@ -59,7 +59,10 @@ const updateProfile = async (userId, updatedData) => {
   try {
     const updatedProfile = await User.findByIdAndUpdate(userId, updatedData, {
       new: true,
-    });
+    })
+      .populate("followers", "username")
+      .populate("following", "username")
+      .populate("posts");
     await updatedProfile.save();
     return updatedProfile;
   } catch (error) {

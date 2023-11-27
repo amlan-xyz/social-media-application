@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   createUser,
+  fetchProfile,
   fetchUsers,
   followUser,
   loginUser,
@@ -31,6 +32,11 @@ export const loginUserAsync = createAsyncThunk(
     return data.user;
   }
 );
+
+export const getProfileAsync = createAsyncThunk("user/getProfile", async () => {
+  const { data } = await fetchProfile();
+  return data.profile;
+});
 
 export const followUserAsync = createAsyncThunk(
   "user/followUser",
@@ -99,7 +105,17 @@ const userSlice = createSlice({
       state.status = "error";
       state.error = action.error.message;
     },
-
+    [getProfileAsync.pending]: (state) => {
+      state.status = "loading";
+    },
+    [getProfileAsync.fulfilled]: (state, action) => {
+      state.isLoggedIn = true;
+      state.user = action.payload;
+    },
+    [getProfileAsync.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = action.error.message;
+    },
     [editProfileAsync.pending]: (state) => {
       state.status = "loading";
     },

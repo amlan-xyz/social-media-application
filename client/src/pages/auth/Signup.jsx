@@ -17,13 +17,18 @@ export const Signup = () => {
     );
   };
 
-  const handleGuestLogin = () => {
-    dispatch(loginUserAsync({ username: "guest_user", password: "guest" }));
-    navigate(location?.state?.from?.pathname || "/");
+  const handleGuestLogin = async () => {
+    dispatch(loginUserAsync({ username: "guest_user", password: "1234" })).then(
+      () => {
+        navigate(location?.state?.from?.pathname || "/");
+      }
+    );
   };
   const handleSignup = (e) => {
     e.preventDefault();
-    dispatch(signupUserAsync(form));
+    dispatch(signupUserAsync(form)).then(() => {
+      navigate(location?.state?.from?.pathname || "/");
+    });
   };
   return (
     <div className="form__container">

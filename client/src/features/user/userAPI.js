@@ -40,11 +40,19 @@ export const updateProfile = async (updatedData) => {
       },
     }
   );
-  console.log(response);
   return response;
 };
 
 export const fetchUsers = async () => {
   const response = await axios.get(api);
+  return response;
+};
+
+export const fetchProfile = async () => {
+  const response = await axios.get(`${api}/profile`, {
+    headers: {
+      authorization: localStorage.getItem("token"),
+    },
+  });
   return response;
 };

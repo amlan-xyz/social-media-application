@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import { Navbar } from "./components/Navbar/Navbar";
-import { getUsersAsync } from "./features/user/userSlice";
+import { getProfileAsync, getUsersAsync } from "./features/user/userSlice";
 import { Login } from "./pages/auth/Login";
 import { Signup } from "./pages/auth/Signup";
 import { Bookmarks } from "./pages/bookmark/Bookmarks";
@@ -15,14 +15,22 @@ import { Profile } from "./pages/profile/Profile";
 import { RequiresAuth } from "./utils/auth";
 
 function App() {
-  const users = useSelector((state) => state.user);
+  const { status, isLoggedIn } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (users.status === "idle") {
+    const token = localStorage.getItem("token");
+    if (token && !isLoggedIn) {
+      dispatch(getProfileAsync()).then(() => navigate("/"));
+    }
+  }, [isLoggedIn, navigate, dispatch]);
+
+  useEffect(() => {
+    if (status === "idle") {
       dispatch(getUsersAsync());
     }
-  }, [users, dispatch]);
+  });
 
   return (
     <div className="container">
