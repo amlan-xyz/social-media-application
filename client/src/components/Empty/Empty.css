@@ -1,0 +1,21 @@
+.no__posts-container {
+  display: flex;
+  justify-content: center;
+  min-height: 80vh;
+  align-items: center;
+}
+
+.no__posts {
+  box-shadow: var(--shadow);
+  padding: 1rem;
+}
+
+.no__posts img {
+  width: 450px;
+}
+
+.no__posts p {
+  text-align: center;
+  color: var(--accent-color);
+  font-size: 1.5rem;
+}

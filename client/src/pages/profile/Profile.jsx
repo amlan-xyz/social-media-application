@@ -5,6 +5,7 @@ import { Post } from "../../components/Post/Post";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 
 import { useState } from "react";
+import { NoPost } from "../../components/Empty/Empty";
 import { editProfileAsync } from "../../features/user/userSlice";
 import "./Profile.css";
 
@@ -67,13 +68,20 @@ export const Profile = () => {
           </div>
         </div>
 
-        <ul className="post__list">
-          {foundUser.posts?.map((post) => (
-            <li className="home__item" key={post._id}>
-              <Post postId={post._id} />
-            </li>
-          ))}
-        </ul>
+        <>
+          <hr />
+          {foundUser.posts.length === 0 ? (
+            <NoPost />
+          ) : (
+            <ul className="post__list">
+              {foundUser.posts?.map((post) => (
+                <li className="home__item" key={post._id}>
+                  <Post postId={post._id} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
       </section>
       {showEdit && (
         <div className="modal">

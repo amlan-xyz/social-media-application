@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Aside } from "../../components/Aside/Aside";
+import { NoPost } from "../../components/Empty/Empty";
 import { Post } from "../../components/Post/Post";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { fetchBookmarksAsync } from "../../features/bookmarks/bookmarkSlice";
@@ -39,13 +40,17 @@ export const Home = () => {
       <Sidebar />
       <section className="content">
         <div className="home__container">
-          <ul className="post__list">
-            {showPosts?.map((post) => (
-              <li className="home__item" key={post._id}>
-                <Post postId={post._id} />
-              </li>
-            ))}
-          </ul>
+          {showPosts.length === 0 ? (
+            <NoPost />
+          ) : (
+            <ul className="post__list">
+              {showPosts?.map((post) => (
+                <li className="home__item" key={post._id}>
+                  <Post postId={post._id} />
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </section>
       <Aside />
