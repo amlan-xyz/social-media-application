@@ -3,6 +3,7 @@
   grid-template-areas:
     "nav"
     "body";
+  height: 100%;
 }
 
 .body {
@@ -18,6 +19,7 @@
   padding-top: 2rem;
   width: 768px;
   grid-area: content;
+  /* outline: solid red; */
 }
 
 @media (max-width: 768px) {
@@ -37,6 +39,6 @@
   .content {
     padding: 1rem;
     margin-top: 1rem;
-    min-height: 70vh;
+    height: 1024px;
   }
 }

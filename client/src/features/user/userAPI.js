@@ -5,7 +5,6 @@ const api = `${BASE_URL}/users`;
 
 export const createUser = async (userData) => {
   const response = await axios.post(`${api}/signup`, userData);
-  console.log(response);
   return response;
 };
 
@@ -28,7 +27,6 @@ export const followUser = async (userId) => {
   return response;
 };
 export const updateProfile = async (updatedData) => {
-  console.log(updatedData);
   const response = await axios.put(
     `${api}/profile/update`,
     {

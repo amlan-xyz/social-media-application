@@ -3,6 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
+import { Loader } from "./components/Loader/Loader";
 import { Navbar } from "./components/Navbar/Navbar";
 import { getProfileAsync, getUsersAsync } from "./features/user/userSlice";
 import { Login } from "./pages/auth/Login";
@@ -16,6 +17,7 @@ import { RequiresAuth } from "./utils/auth";
 
 function App() {
   const { status, isLoggedIn } = useSelector((state) => state.user);
+  const postStatus = useSelector((state) => state.post.status);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -34,53 +36,59 @@ function App() {
 
   return (
     <div className="container">
-      <Navbar />
-      <div className="body">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <RequiresAuth>
-                <Home />
-              </RequiresAuth>
-            }
-          />
-          <Route
-            path="/explore"
-            element={
-              <RequiresAuth>
-                <Explore />
-              </RequiresAuth>
-            }
-          />
-          <Route
-            path="/bookmarks"
-            element={
-              <RequiresAuth>
-                <Bookmarks />
-              </RequiresAuth>
-            }
-          />
-          <Route
-            path="/posts/:id"
-            element={
-              <RequiresAuth>
-                <PostDetails />
-              </RequiresAuth>
-            }
-          />
-          <Route
-            path="/profile/:username"
-            element={
-              <RequiresAuth>
-                <Profile />
-              </RequiresAuth>
-            }
-          />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </div>
+      {status === "loading" || postStatus === "loading" ? (
+        <Loader />
+      ) : (
+        <>
+          <Navbar />
+          <div className="body">
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <RequiresAuth>
+                    <Home />
+                  </RequiresAuth>
+                }
+              />
+              <Route
+                path="/explore"
+                element={
+                  <RequiresAuth>
+                    <Explore />
+                  </RequiresAuth>
+                }
+              />
+              <Route
+                path="/bookmarks"
+                element={
+                  <RequiresAuth>
+                    <Bookmarks />
+                  </RequiresAuth>
+                }
+              />
+              <Route
+                path="/posts/:id"
+                element={
+                  <RequiresAuth>
+                    <PostDetails />
+                  </RequiresAuth>
+                }
+              />
+              <Route
+                path="/profile/:username"
+                element={
+                  <RequiresAuth>
+                    <Profile />
+                  </RequiresAuth>
+                }
+              />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          </div>
+        </>
+      )}
     </div>
   );
 }
