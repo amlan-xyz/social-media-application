@@ -75,7 +75,10 @@ export const Sidebar = () => {
         </div>
 
         <div className="sidebar__footer">
-          <img src={user.profile_img} alt={user.name} />
+          <img
+            src={user.profile_img ? user.profile_img : "/images/demo.png"}
+            alt={user.name}
+          />
           <div className="sidebar__footer-body">
             <p>{user.name}</p>
             <span>{user.username}</span>

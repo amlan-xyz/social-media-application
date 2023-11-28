@@ -54,7 +54,7 @@ export const Profile = () => {
         <div className="user__container">
           <img
             className="profile__img"
-            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
+            src={user.profile_img ? user.profile_img : "/images/demo.png"}
             alt="my profile pic"
           />
           <div className="user__body">

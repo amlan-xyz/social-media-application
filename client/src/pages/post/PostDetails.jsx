@@ -98,8 +98,12 @@ export const PostDetails = () => {
           <div className="post__header">
             <div className="post__header-content">
               <img
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
-                alt="woman profile"
+                src={
+                  foundPost.author.profile_img
+                    ? foundPost.author.profile_img
+                    : "/images/demo.png"
+                }
+                alt={foundPost.author.username}
               />
               <p>
                 <Link
@@ -178,8 +182,12 @@ export const PostDetails = () => {
                   <div className="comment__header">
                     <div className="comment__header-content">
                       <img
-                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
-                        alt="woman profile"
+                        src={
+                          comment_by.profile_img
+                            ? comment_by.profile_img
+                            : "/images/demo.png"
+                        }
+                        alt={comment_by.username}
                       />
                       <p>
                         <Link

@@ -81,7 +81,7 @@
   }
 
   .sidebar__footer {
-    flex-direction: column;
+    display: none;
   }
 }
 
@@ -108,10 +108,6 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-  }
-
-  .sidebar__footer {
-    display: none;
   }
 
   .sidebar__post-btn {

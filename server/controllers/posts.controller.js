@@ -22,9 +22,9 @@ const createPost = async (userId, postData) => {
 const getAllPosts = async () => {
   try {
     const posts = await Post.find()
-      .populate("author", " username profle_img")
+      .populate("author", " username profile_img")
       .populate("likes", " username ")
-      .populate("comments.comment_by", " username profle_img");
+      .populate("comments.comment_by", " username profile_img");
     return posts;
   } catch (error) {
     console.error("Error getting posts", error);
@@ -34,9 +34,9 @@ const getAllPosts = async () => {
 const getPostById = async (postId) => {
   try {
     const post = await Post.findById(postId)
-      .populate("author", " username profle_img")
+      .populate("author", " username profile_img")
       .populate("likes", " username")
-      .populate("comments.comment_by", " username profle_img");
+      .populate("comments.comment_by", " username profile_img");
     return post;
   } catch (error) {
     console.error("Error getting post", error);
@@ -48,8 +48,8 @@ const likePost = async (userId, postId) => {
     const user = await User.findById(userId);
     const post = await Post.findById(postId)
       .populate("likes", "username")
-      .populate("author", "username profle_img")
-      .populate("comments.comment_by", "username profle_img");
+      .populate("author", "username profile_img")
+      .populate("comments.comment_by", "username profile_img");
     post.likes.push(user);
     await post.save();
     return post;
@@ -64,7 +64,7 @@ const unlikePost = async (userId, postId) => {
     const post = await Post.findById(postId)
       .populate("likes", "username")
       .populate("author")
-      .populate("comments.comment_by", " username profle_img");
+      .populate("comments.comment_by", " username profile_img");
     const updatedLikes = post.likes.filter(
       ({ _id }) => _id.toHexString() !== user._id.toHexString()
     );
@@ -97,7 +97,7 @@ const updatePost = async (postId, updatedData) => {
       new: true,
     })
       .populate("likes", " username")
-      .populate("comments.comment_by", " username profle_img")
+      .populate("comments.comment_by", " username profile_img")
       .populate("author", "username profile_img");
     return updatedPost;
   } catch (error) {
@@ -110,8 +110,8 @@ const addComment = async (userId, postId, commentData) => {
     const [post, user] = await Promise.all([
       Post.findById(postId)
         .populate("likes", " username")
-        .populate("comments.comment_by", " username profle_img")
-        .populate("author", " username profle_img"),
+        .populate("comments.comment_by", " username profile_img")
+        .populate("author", " username profile_img"),
       User.findById(userId),
     ]);
     const newComment = {
@@ -131,8 +131,8 @@ const removeComment = async (userId, postId, commentId) => {
     const [post, user] = await Promise.all([
       Post.findById(postId)
         .populate("likes", " username")
-        .populate("comments.comment_by", " username profle_img")
-        .populate("author", " username profle_img"),
+        .populate("comments.comment_by", " username proflie_img")
+        .populate("author", " username profile_img"),
       User.findById(userId),
     ]);
     const toDeleteComment = post.comments.find(
