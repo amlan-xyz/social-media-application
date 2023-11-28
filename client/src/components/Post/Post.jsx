@@ -26,6 +26,8 @@ import {
 import { MdDelete, MdEdit } from "react-icons/md";
 import "./Post.css";
 
+import { formatDate } from "../../utils/formatDate";
+
 export const Post = ({ postId }) => {
   const posts = useSelector((state) => state.post.posts);
   const bookmarks = useSelector((state) => state.bookmark.bookmarks);
@@ -102,7 +104,7 @@ export const Post = ({ postId }) => {
               {post.author.username}.
             </Link>
           </p>
-          <small>3h</small>
+          <small>{formatDate(post.updatedAt)}</small>
         </div>
         {user.username === post.author.username ? (
           <div className="post__header-btns">
