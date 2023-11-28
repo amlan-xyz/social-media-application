@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { followUserAsync } from "../../features/user/userSlice";
 import "./Aside.css";
 export const Aside = () => {
@@ -24,9 +24,6 @@ export const Aside = () => {
     <div className="aside__container">
       <div className="aside__header">
         <p>Suggestions</p>
-        <Link className="aside__header-link" to="/users">
-          See All
-        </Link>
       </div>
       <ul className="aside__list">
         {filterdUsers?.map((user) => (

@@ -152,7 +152,7 @@ router.put("/profile/update", authVerify, async (req, res) => {
       if (updatedProfile) {
         res.status(200).json({
           message: "User profile updated",
-          profile: updateProfile,
+          profile: updatedProfile,
         });
       } else {
         res.status(400).json({ message: "User profile updation failed" });

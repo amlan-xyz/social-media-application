@@ -26,6 +26,7 @@ import {
   FaRegHeart,
 } from "react-icons/fa";
 import { MdDelete, MdEdit } from "react-icons/md";
+import { formatDate } from "../../utils/formatDate";
 import "./PostDetails.css";
 
 export const PostDetails = () => {
@@ -113,7 +114,7 @@ export const PostDetails = () => {
                   {foundPost.author.username}.
                 </Link>
               </p>
-              <small>3h</small>
+              <small>{formatDate(foundPost.createdAt)}</small>
             </div>
             {user.username === foundPost.author.username ? (
               <div className="post__header-btns">

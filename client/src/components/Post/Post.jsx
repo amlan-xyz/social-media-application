@@ -104,7 +104,7 @@ export const Post = ({ postId }) => {
               {post.author.username}.
             </Link>
           </p>
-          <small>{formatDate(post.updatedAt)}</small>
+          <small>{formatDate(post.createdAt)}</small>
         </div>
         {user.username === post.author.username ? (
           <div className="post__header-btns">

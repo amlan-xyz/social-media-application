@@ -1,6 +1,6 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Post } from "../../components/Post/Post";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 
@@ -23,6 +23,7 @@ export const Profile = () => {
   const [img, setImg] = useState(foundUser.profile_img);
 
   const [showEdit, setShowEdit] = useState(false);
+  const navigate = useNavigate();
 
   const handleEdit = (e) => {
     e.preventDefault();
@@ -31,7 +32,9 @@ export const Profile = () => {
       username: userName,
       profile_img: img,
     };
-    dispatch(editProfileAsync(updatedData));
+    dispatch(editProfileAsync(updatedData)).then(() =>
+      navigate(`/profile/${user.username}`)
+    );
     toggleForm();
   };
 
