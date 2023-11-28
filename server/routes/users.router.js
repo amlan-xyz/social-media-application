@@ -67,7 +67,10 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ username })
+    .populate("followers", "username")
+    .populate("following", "username")
+    .populate("posts");
   if (!user) {
     res.status(404).json({ message: "User not found" });
   } else {

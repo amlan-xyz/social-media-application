@@ -162,7 +162,6 @@ export const Post = ({ postId }) => {
           )}
         </div>
       </div>
-      <></>
       <>
         {showEditForm && (
           <div className="modal">

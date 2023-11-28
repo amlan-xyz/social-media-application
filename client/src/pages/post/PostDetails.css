@@ -1,0 +1,36 @@
+.post__comments {
+  margin: 2rem 0;
+}
+
+.comments__list {
+  margin-top: 1rem;
+}
+
+.comment__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.comment__header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.comment__header-content img {
+  width: 30px;
+  aspect-ratio: 1;
+  border-radius: 100%;
+}
+
+.comment__delete-btn {
+  border: none;
+  background: none;
+  font-size: 1.2rem;
+}
+
+.comments__list-item {
+  margin: 1rem 0;
+}
