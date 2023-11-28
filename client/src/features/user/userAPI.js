@@ -26,6 +26,20 @@ export const followUser = async (userId) => {
   );
   return response;
 };
+
+export const unfollowUser = async (userId) => {
+  const response = await axios.post(
+    `${api}/unfollow/${userId}`,
+    {},
+    {
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+    }
+  );
+  return response;
+};
+
 export const updateProfile = async (updatedData) => {
   const response = await axios.put(
     `${api}/profile/update`,

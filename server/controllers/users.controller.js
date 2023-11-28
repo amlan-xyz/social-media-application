@@ -35,7 +35,10 @@ const getAllUsers = async () => {
 
 const getUserById = async (userId) => {
   try {
-    const user = await User.findById(userId);
+    const user = await User.findById(userId)
+      .populate("followers", "username")
+      .populate("following", "username")
+      .populate("posts");
     return user;
   } catch (error) {
     console.error("Error geting user data :-", error);
@@ -72,8 +75,14 @@ const updateProfile = async (userId, updatedData) => {
 
 const followUser = async (userId, followUserId) => {
   try {
-    const user = await User.findById(userId);
-    const followUser = await User.findById(followUserId);
+    const user = await User.findById(userId)
+      .populate("followers", "username")
+      .populate("following", "username")
+      .populate("posts");
+    const followUser = await User.findById(followUserId)
+      .populate("followers", "username")
+      .populate("following", "username")
+      .populate("posts");
     user.following.push(followUser);
     followUser.followers.push(user);
     await user.save();
@@ -86,8 +95,14 @@ const followUser = async (userId, followUserId) => {
 
 const unfollowUser = async (userId, unfollowUserId) => {
   try {
-    const user = await User.findById(userId);
-    const unfollowUser = await User.findById(unfollowUserId);
+    const user = await User.findById(userId)
+      .populate("followers", "username")
+      .populate("following", "username")
+      .populate("posts");
+    const unfollowUser = await User.findById(unfollowUserId)
+      .populate("followers", "username")
+      .populate("following", "username")
+      .populate("posts");
     const updatedFollowing = user.following.filter(
       ({ _id }) => _id.toHexString() !== unfollowUser._id.toHexString()
     );

@@ -96,18 +96,9 @@ router.get("/profile", authVerify, async (req, res) => {
   try {
     const user = await getUserById(userId);
     if (user) {
-      const profile = {
-        username: user.username,
-        email: user.email,
-        name: user.name,
-        profile_img: user.profile_img,
-        posts: user.posts,
-        following: user.following,
-        followers: user.followers,
-      };
       res.status(200).json({
         message: "User profile",
-        profile,
+        profile: user,
       });
     } else {
       throw "Invalid user, Please login again";
@@ -156,18 +147,9 @@ router.put("/profile/update", authVerify, async (req, res) => {
     if (user) {
       const updatedProfile = await updateProfile(userId, updatedData);
       if (updatedProfile) {
-        const profile = {
-          username: updatedProfile.username,
-          email: updatedProfile.email,
-          name: updatedProfile.name,
-          profile_img: updatedProfile.profile_img,
-          posts: updatedProfile.posts,
-          following: updatedProfile.following,
-          followers: updatedProfile.followers,
-        };
         res.status(200).json({
           message: "User profile updated",
-          profile,
+          profile: updateProfile,
         });
       } else {
         res.status(400).json({ message: "User profile updation failed" });

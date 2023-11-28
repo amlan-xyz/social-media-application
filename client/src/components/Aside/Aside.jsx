@@ -11,6 +11,11 @@ export const Aside = () => {
     ({ username }) => username !== user.username
   );
 
+  const filterdUsers = excludeLoggedInUser.filter(
+    ({ followers }) =>
+      !followers.some(({ username }) => username === user.username)
+  );
+
   const handleFollow = (userId) => {
     dispatch(followUserAsync(userId));
   };
@@ -24,7 +29,7 @@ export const Aside = () => {
         </Link>
       </div>
       <ul className="aside__list">
-        {excludeLoggedInUser?.map((user) => (
+        {filterdUsers?.map((user) => (
           <li key={user._id} className="aside__item">
             <div className="aside__item-body">
               <img

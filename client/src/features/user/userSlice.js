@@ -5,6 +5,7 @@ import {
   fetchUsers,
   followUser,
   loginUser,
+  unfollowUser,
   updateProfile,
 } from "./userAPI";
 
@@ -42,7 +43,15 @@ export const followUserAsync = createAsyncThunk(
   "user/followUser",
   async (userId) => {
     const { data } = await followUser(userId);
-    console.log(data);
+    return data;
+  }
+);
+
+export const unfollowUserAsync = createAsyncThunk(
+  "user/unfollowUser",
+  async (userId) => {
+    const { data } = await unfollowUser(userId);
+    return data;
   }
 );
 
@@ -100,6 +109,7 @@ const userSlice = createSlice({
     [loginUserAsync.fulfilled]: (state, action) => {
       state.isLoggedIn = true;
       state.user = action.payload;
+      state.status = "success";
     },
     [loginUserAsync.rejected]: (state, action) => {
       state.status = "error";
@@ -110,6 +120,7 @@ const userSlice = createSlice({
     },
     [getProfileAsync.fulfilled]: (state, action) => {
       state.isLoggedIn = true;
+      state.status = "success";
       state.user = action.payload;
     },
     [getProfileAsync.rejected]: (state, action) => {
@@ -131,6 +142,40 @@ const userSlice = createSlice({
       state.user = updatedUser;
     },
     [editProfileAsync.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = action.error.message;
+    },
+    [followUserAsync.pending]: (state) => {
+      state.status = "loading";
+    },
+    [followUserAsync.fulfilled]: (state, action) => {
+      const updatedUser = action.payload.user;
+      const updatedFollowUser = action.payload.followUser;
+      state.user = updatedUser;
+      const userIdx = state.users.findIndex(
+        ({ username }) => username === updatedFollowUser.username
+      );
+      state.users[userIdx] = updatedFollowUser;
+      state.status = "success";
+    },
+    [followUserAsync.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = action.error.message;
+    },
+    [unfollowUserAsync.pending]: (state) => {
+      state.status = "loading";
+    },
+    [unfollowUserAsync.fulfilled]: (state, action) => {
+      const updatedUser = action.payload.user;
+      const updatedFollowUser = action.payload.unfollowUser;
+      state.user = updatedUser;
+      const userIdx = state.users.findIndex(
+        ({ username }) => username === updatedFollowUser.username
+      );
+      state.users[userIdx] = updatedFollowUser;
+      state.status = "success";
+    },
+    [unfollowUserAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
     },

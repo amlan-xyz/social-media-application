@@ -6,7 +6,11 @@ import { Sidebar } from "../../components/Sidebar/Sidebar";
 
 import { useState } from "react";
 import { NoPost } from "../../components/Empty/Empty";
-import { editProfileAsync } from "../../features/user/userSlice";
+import {
+  editProfileAsync,
+  followUserAsync,
+  unfollowUserAsync,
+} from "../../features/user/userSlice";
 import "./Profile.css";
 
 export const Profile = () => {
@@ -35,6 +39,14 @@ export const Profile = () => {
     setShowEdit(!showEdit);
   };
 
+  const handleFollow = (userId) => {
+    dispatch(followUserAsync(userId));
+  };
+
+  const handleUnfollow = (userId) => {
+    dispatch(unfollowUserAsync(userId));
+  };
+
   return (
     <div className="layout">
       <Sidebar />
@@ -53,7 +65,25 @@ export const Profile = () => {
                   Edit Profile
                 </button>
               ) : (
-                ""
+                <>
+                  {user.following.some(
+                    ({ username }) => username === foundUser.username
+                  ) ? (
+                    <button
+                      onClick={() => handleUnfollow(foundUser._id)}
+                      className="primary__btn"
+                    >
+                      Unfollow
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleFollow(foundUser._id)}
+                      className="primary__btn"
+                    >
+                      Follow
+                    </button>
+                  )}
+                </>
               )}
             </div>
             <div className="user__stats">
