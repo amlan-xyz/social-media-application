@@ -26,7 +26,7 @@ function App() {
     if (token && !isLoggedIn) {
       dispatch(getProfileAsync()).then(() => navigate("/"));
     }
-  }, [isLoggedIn, navigate, dispatch]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (status === "idle") {

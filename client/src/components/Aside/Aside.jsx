@@ -11,10 +11,12 @@ export const Aside = () => {
     ({ username }) => username !== user.username
   );
 
-  const filterdUsers = excludeLoggedInUser.filter(
+  const excludeFollowing = excludeLoggedInUser.filter(
     ({ followers }) =>
       !followers.some(({ username }) => username === user.username)
   );
+
+  const filterdUsers = excludeFollowing.slice(0, 4);
 
   const handleFollow = (userId) => {
     dispatch(followUserAsync(userId));
