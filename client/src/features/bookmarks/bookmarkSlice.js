@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
+import { toast } from "react-toastify";
 import { addBookmark, fetchBookmarks, removeBookmark } from "./bookmarkAPI";
 
 const initialState = {
@@ -54,10 +54,12 @@ const bookmarkSlice = createSlice({
     [addBookmarkAsync.fulfilled]: (state, action) => {
       state.bookmarks.push(action.payload);
       state.status = "success";
+      toast.success("Post saved");
     },
     [addBookmarkAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
+      toast.error("Failed to save post");
     },
     [removeBookmarkAsync.pending]: (state) => {
       state.status = "loading";
@@ -66,11 +68,13 @@ const bookmarkSlice = createSlice({
       state.bookmarks = state.bookmarks.filter(
         ({ _id }) => _id !== action.payload._id
       );
+      toast.success("Unsaved post");
       state.status = "success";
     },
     [removeBookmarkAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
+      toast.error("Failed to unsave post");
     },
   },
 });

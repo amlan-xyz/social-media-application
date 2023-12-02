@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
+
 import {
   addComment,
   createPost,
@@ -100,10 +102,12 @@ const postSlice = createSlice({
     [createPostAsync.fulfilled]: (state, action) => {
       state.posts.push(action.payload);
       state.status = "success";
+      toast.success("Post created");
     },
     [createPostAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
+      toast.error("Failed to create post");
     },
     [deletePostAsync.pending]: (state) => {
       state.status = "loading";
@@ -111,10 +115,12 @@ const postSlice = createSlice({
     [deletePostAsync.fulfilled]: (state, action) => {
       state.posts = state.posts.filter(({ _id }) => _id !== action.payload._id);
       state.status = "success";
+      toast.success("Post deleted");
     },
     [deletePostAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = "Error deleting post";
+      toast.error("Failed to delete post");
     },
     [editPostAsync.pending]: (state) => {
       state.status = "loading";
@@ -128,13 +134,12 @@ const postSlice = createSlice({
         state.posts[postIdx] = updatedPost;
       }
       state.status = "success";
+      toast.success("Post edited");
     },
     [editPostAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = "Error editing post";
-    },
-    [likePostAsync.pending]: (state) => {
-      state.status = "loading";
+      toast.error("Failed to edit post");
     },
     [likePostAsync.fulfilled]: (state, action) => {
       const updatedPost = action.payload;
@@ -150,9 +155,7 @@ const postSlice = createSlice({
       state.status = "error";
       state.error = "Error liking post";
     },
-    [unlikePostAsync.pending]: (state) => {
-      state.status = "loading";
-    },
+
     [unlikePostAsync.fulfilled]: (state, action) => {
       const updatedPost = action.payload;
       const postIdx = state.posts.findIndex(
@@ -179,10 +182,12 @@ const postSlice = createSlice({
         state.posts[postIdx] = updatedPost;
       }
       state.status = "success";
+      toast.success("Comment added");
     },
     [addCommentAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
+      toast.error("Failed to add comment");
     },
     [removeCommentAsync.pending]: (state) => {
       state.status = "loading";
@@ -196,10 +201,12 @@ const postSlice = createSlice({
         state.posts[postIdx] = updatedPost;
       }
       state.status = "success";
+      toast.success("Comment removed");
     },
     [removeCommentAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
+      toast.error("Failed to remove comment");
     },
   },
 });

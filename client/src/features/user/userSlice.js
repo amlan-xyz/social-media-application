@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import {
   createUser,
   fetchProfile,
@@ -96,12 +97,15 @@ const userSlice = createSlice({
       state.status = "loading";
     },
     [signupUserAsync.fulfilled]: (state, action) => {
+      state.status = "success";
       state.isLoggedIn = true;
       state.user = action.payload;
+      toast.success("Signup successful");
     },
     [signupUserAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
+      toast.success("Signup failed");
     },
     [loginUserAsync.pending]: (state) => {
       state.status = "loading";
@@ -110,10 +114,12 @@ const userSlice = createSlice({
       state.isLoggedIn = true;
       state.user = action.payload;
       state.status = "success";
+      toast.success("Login successful");
     },
     [loginUserAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
+      toast.error("Login Failed");
     },
     [getProfileAsync.pending]: (state) => {
       state.status = "loading";
@@ -140,10 +146,12 @@ const userSlice = createSlice({
         state.users[userIdx] = updatedUser;
       }
       state.user = updatedUser;
+      toast.success("Profile Updated");
     },
     [editProfileAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
+      toast.error("Failed to update profile");
     },
     [followUserAsync.pending]: (state) => {
       state.status = "loading";
@@ -157,10 +165,12 @@ const userSlice = createSlice({
       );
       state.users[userIdx] = updatedFollowUser;
       state.status = "success";
+      toast.success("User followed");
     },
     [followUserAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
+      toast.error("Failed to follow");
     },
     [unfollowUserAsync.pending]: (state) => {
       state.status = "loading";
@@ -174,10 +184,12 @@ const userSlice = createSlice({
       );
       state.users[userIdx] = updatedFollowUser;
       state.status = "success";
+      toast.success("User unfollowed");
     },
     [unfollowUserAsync.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
+      toast.error("Failed to unfollow");
     },
   },
 });

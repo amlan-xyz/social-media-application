@@ -4,7 +4,7 @@ import { logoutUser } from "../../features/user/userSlice";
 
 //icons
 import { CiLogin, CiLogout } from "react-icons/ci";
-import { IoShareSocialOutline } from "react-icons/io5";
+import { FaConnectdevelop } from "react-icons/fa";
 
 import "./Navbar.css";
 export const Navbar = () => {
@@ -18,8 +18,8 @@ export const Navbar = () => {
     <div className="navbar">
       <header className="nav__header">
         <NavLink className="no__decoration" to="/">
-          Social
-          <IoShareSocialOutline />
+          WeShare
+          <FaConnectdevelop />
         </NavLink>
       </header>
 

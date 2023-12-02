@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   addCommentAsync,
   deletePostAsync,
@@ -38,6 +38,7 @@ export const Post = ({ postId }) => {
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [commentText, setCommentText] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLike = (postId) => {
     dispatch(likePostAsync(postId));
@@ -48,7 +49,9 @@ export const Post = ({ postId }) => {
   };
 
   const handleDelete = (postId) => {
-    dispatch(deletePostAsync(postId));
+    dispatch(deletePostAsync(postId)).then(() => {
+      navigate("/");
+    });
   };
 
   const handleEdit = (e) => {
@@ -120,11 +123,7 @@ export const Post = ({ postId }) => {
         )}
       </div>
       <div className="post__body">
-        <img
-          className="post__img"
-          src="https://images.unsplash.com/photo-1613323593608-abc90fec84ff?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
-          alt="a man in snow"
-        />
+        <img className="post__img" src={post.image} alt={post.caption} />
         <div className="post__body-btns">
           <span>
             {post.likes.find(({ username }) => username === user.username) ? (

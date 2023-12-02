@@ -15,6 +15,9 @@ import { PostDetails } from "./pages/post/PostDetails";
 import { Profile } from "./pages/profile/Profile";
 import { RequiresAuth } from "./utils/auth";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   const { status, isLoggedIn } = useSelector((state) => state.user);
   const postStatus = useSelector((state) => state.post.status);
@@ -36,11 +39,19 @@ function App() {
 
   return (
     <div className="container">
+      <ToastContainer
+        position="bottom-right"
+        autoClose="400"
+        closeOnClick="true"
+        draggable="true"
+        borderRadius="10px"
+      />
       {status === "loading" || postStatus === "loading" ? (
         <Loader />
       ) : (
         <>
           <Navbar />
+
           <div className="body">
             <Routes>
               <Route
