@@ -3,8 +3,8 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import { Loader } from "./components/Loader/Loader";
-import { Navbar } from "./components/Navbar/Navbar";
+import { Loader } from "./component/Loader/Loader";
+import { Navbar } from "./component/Navbar/Navbar";
 import { getProfileAsync, getUsersAsync } from "./features/user/userSlice";
 import { Login } from "./pages/auth/Login";
 import { Signup } from "./pages/auth/Signup";

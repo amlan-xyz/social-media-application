@@ -1,11 +1,11 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Post } from "../../components/Post/Post";
-import { Sidebar } from "../../components/Sidebar/Sidebar";
+import { Post } from "../../component/Post/Post";
+import { Sidebar } from "../../component/Sidebar/Sidebar";
 
 import { useState } from "react";
-import { NoPost } from "../../components/Empty/Empty";
+import { NoPost } from "../../component/Empty/Empty";
 import {
   editProfileAsync,
   followUserAsync,

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { Sidebar } from "../../components/Sidebar/Sidebar";
+import { Sidebar } from "../../component/Sidebar/Sidebar";
 import {
   addCommentAsync,
   deletePostAsync,

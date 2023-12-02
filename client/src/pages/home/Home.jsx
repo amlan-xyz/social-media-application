@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Aside } from "../../components/Aside/Aside";
-import { NoPost } from "../../components/Empty/Empty";
-import { Post } from "../../components/Post/Post";
-import { Sidebar } from "../../components/Sidebar/Sidebar";
+import { Aside } from "../../component/Aside/Aside";
+import { NoPost } from "../../component/Empty/Empty";
+import { Post } from "../../component/Post/Post";
+import { Sidebar } from "../../component/Sidebar/Sidebar";
 import { fetchBookmarksAsync } from "../../features/bookmarks/bookmarkSlice";
 import { getPostsAsync } from "../../features/post/postSlice";
 import "./Home.css";
