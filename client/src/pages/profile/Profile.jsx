@@ -21,6 +21,7 @@ export const Profile = () => {
   const [name, setName] = useState(foundUser.name);
   const [userName, setUserName] = useState(foundUser.username);
   const [img, setImg] = useState(foundUser.profile_img);
+  const { posts } = useSelector((state) => state.post);
 
   const [showEdit, setShowEdit] = useState(false);
   const navigate = useNavigate();
@@ -107,11 +108,15 @@ export const Profile = () => {
             <NoPost />
           ) : (
             <ul className="post__list">
-              {foundUser.posts?.map((post) => (
-                <li className="home__item" key={post._id}>
-                  <Post postId={post._id} />
-                </li>
-              ))}
+              {posts?.map((post) =>
+                post.author.username === foundUser.username ? (
+                  <li className="home__item" key={post._id}>
+                    <Post postId={post._id} />
+                  </li>
+                ) : (
+                  ""
+                )
+              )}
             </ul>
           )}
         </>
