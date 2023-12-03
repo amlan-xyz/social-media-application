@@ -72,3 +72,7 @@ ul {
   padding: 0.2rem 0.5rem;
   border: none;
 }
+
+.color__accent {
+  color: var(--accent-color);
+}

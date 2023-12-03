@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { createPostAsync } from "../../features/post/postSlice";
 
 //icons
@@ -34,6 +34,10 @@ export const Sidebar = () => {
     setImage("");
   };
 
+  const getActiveStyle = ({ isActive }) => ({
+    color: isActive ? "#2B2A4C" : "",
+  });
+
   return (
     <>
       <div className="sidebar__container">
@@ -49,27 +53,39 @@ export const Sidebar = () => {
               </button>
             </li>
             <li className="sidebar__item">
-              <Link className="sidebar__link" to="/">
+              <NavLink style={getActiveStyle} className="sidebar__link" to="/">
                 <FaHome className="sidebar__icon" /> <span>Home</span>
-              </Link>
+              </NavLink>
             </li>
             <li className="sidebar__item">
-              <Link className="sidebar__link" to="/explore">
+              <NavLink
+                style={getActiveStyle}
+                className="sidebar__link"
+                to="/explore"
+              >
                 <FaCompass className="sidebar__icon" />
                 <span>Explore</span>
-              </Link>
+              </NavLink>
             </li>
             <li className="sidebar__item">
-              <Link className="sidebar__link" to="/bookmarks">
+              <NavLink
+                style={getActiveStyle}
+                className="sidebar__link"
+                to="/bookmarks"
+              >
                 <IoBookmarkSharp className="sidebar__icon" />
                 <span>Bookmarks</span>
-              </Link>
+              </NavLink>
             </li>
             <li className="sidebar__item">
-              <Link className="sidebar__link" to={`/profile/${user?.username}`}>
+              <NavLink
+                style={getActiveStyle}
+                className="sidebar__link"
+                to={`/profile/${user?.username}`}
+              >
                 <FaUser className="sidebar__icon" />
                 <span>Profile</span>
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </div>

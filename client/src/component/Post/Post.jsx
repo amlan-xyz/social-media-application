@@ -101,7 +101,7 @@ export const Post = ({ postId }) => {
           />
           <p>
             <Link
-              className="no__decoration"
+              className="no__decoration color__accent"
               to={`/profile/${post.author.username}`}
             >
               {post.author.username}.

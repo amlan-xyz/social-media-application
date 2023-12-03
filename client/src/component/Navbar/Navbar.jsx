@@ -17,7 +17,7 @@ export const Navbar = () => {
   return (
     <div className="navbar">
       <header className="nav__header">
-        <NavLink className="no__decoration" to="/">
+        <NavLink className="no__decoration color__accent" to="/">
           WeShare
           <FaConnectdevelop />
         </NavLink>
