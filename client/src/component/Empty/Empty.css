@@ -33,6 +33,7 @@
 
 @media (max-width: 425px) {
   .no__posts-container {
+    margin: 5rem 0;
     height: 400px;
   }
 }
