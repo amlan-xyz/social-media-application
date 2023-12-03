@@ -100,6 +100,7 @@ const userSlice = createSlice({
       state.status = "success";
       state.isLoggedIn = true;
       state.user = action.payload;
+      state.users.push(action.payload);
       toast.success("Signup successful");
     },
     [signupUserAsync.rejected]: (state, action) => {
