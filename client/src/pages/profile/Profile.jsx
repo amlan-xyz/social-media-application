@@ -23,7 +23,7 @@ export const Profile = () => {
   const foundUser = users.find((user) => user.username === username);
   const [name, setName] = useState(foundUser.name);
   const [userName, setUserName] = useState(foundUser.username);
-  const [img, setImg] = useState(foundUser.image?.url);
+  const [bio, setBio] = useState(foundUser.bio ? foundUser.bio : "");
   const { posts } = useSelector((state) => state.post);
 
   const [showEdit, setShowEdit] = useState(false);
@@ -37,7 +37,7 @@ export const Profile = () => {
     const updatedData = {
       name,
       username: userName,
-      profile_img: img,
+      bio,
     };
     dispatch(editProfileAsync(updatedData)).then(() =>
       navigate(`/profile/${user.username}`)
@@ -132,13 +132,13 @@ export const Profile = () => {
             </div>
             <div className="user__details">
               <p>{foundUser.name}</p>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+              {foundUser.bio ? <p>{foundUser.bio}</p> : ""}
             </div>
           </div>
         </div>
 
         <>
-          <hr />
+          <hr className="mb__2" />
           {foundUser.posts.length === 0 ? (
             <NoPost />
           ) : (
@@ -186,12 +186,12 @@ export const Profile = () => {
                   />
                 </div>
                 <div className="post__form-item">
-                  <label htmlFor="image">Image</label>
+                  <label htmlFor="bio">Bio</label>
                   <input
-                    id="image"
+                    id="bio"
                     type="text"
-                    placeholder={foundUser.profile_img}
-                    onChange={(e) => setImg(e.target.value)}
+                    placeholder={foundUser.bio}
+                    onChange={(e) => setBio(e.target.value)}
                   />
                 </div>
                 <div className="post__form-item">

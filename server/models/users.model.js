@@ -24,6 +24,7 @@ const usersSchema = new mongoose.Schema(
       public_id: String,
       url: String,
     },
+    bio: String,
     posts: [
       {
         type: mongoose.Schema.Types.ObjectId,

@@ -76,3 +76,7 @@ ul {
 .color__accent {
   color: var(--accent-color);
 }
+
+.mb__2 {
+  margin-bottom: 2rem;
+}
