@@ -9,11 +9,19 @@ export const fetchPosts = async () => {
 };
 
 export const createPost = async (postData) => {
-  const response = await axios.post(api, postData, {
-    headers: {
-      authorization: localStorage.getItem("token"),
+  const response = await axios.post(
+    api,
+    {
+      caption: postData.caption,
+      file: postData.image,
     },
-  });
+    {
+      headers: {
+        authorization: localStorage.getItem("token"),
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
 
   return response;
 };

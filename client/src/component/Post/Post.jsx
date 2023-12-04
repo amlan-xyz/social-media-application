@@ -121,7 +121,7 @@ export const Post = ({ postId }) => {
         )}
       </div>
       <div className="post__body">
-        <img className="post__img" src={post.image} alt={post.caption} />
+        <img className="post__img" src={post.image.url} alt={post.caption} />
         <div className="post__body-btns">
           <span>
             {post.likes.find(({ username }) => username === user.username) ? (

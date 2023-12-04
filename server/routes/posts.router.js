@@ -1,5 +1,5 @@
 const express = require("express");
-
+const cloudinary = require("cloudinary");
 const router = express.Router();
 
 //controllers
@@ -15,10 +15,27 @@ const {
   removeComment,
 } = require("../controllers/posts.controller");
 const { authVerify } = require("../middlewares/auth.middleware");
+const { singleUpload } = require("../middlewares/multer.middleware");
+const getDataUri = require("../utils/dataUri");
 
-router.post("", authVerify, async (req, res) => {
+router.post("", authVerify, singleUpload, async (req, res) => {
   const { userId } = req.user;
-  const postData = req.body;
+  const { caption } = req.body;
+  const file = req.file;
+  const fileUri = getDataUri(file);
+
+  const myCloud = await cloudinary.v2.uploader.upload(fileUri.content, {
+    folder: "social media/posts",
+  });
+
+  const postData = {
+    caption,
+    image: {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    },
+  };
+
   try {
     const newPost = await createPost(userId, postData);
     if (newPost) {

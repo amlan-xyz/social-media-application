@@ -7,8 +7,8 @@ const postsSchema = new mongoose.Schema(
       required: true,
     },
     image: {
-      type: String,
-      required: true,
+      public_id: String,
+      url: String,
     },
 
     likes: [

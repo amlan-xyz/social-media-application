@@ -16,11 +16,13 @@ export const Sidebar = () => {
 
   const toggleForm = () => {
     setShowForm(!showForm);
+    setPreview("");
   };
 
   const dispatch = useDispatch();
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState("");
+  const [preview, setPreview] = useState("");
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -37,6 +39,16 @@ export const Sidebar = () => {
   const getActiveStyle = ({ isActive }) => ({
     color: isActive ? "#2B2A4C" : "",
   });
+
+  const changeImageHandler = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImage(file);
+      setPreview(reader.result);
+    };
+  };
 
   return (
     <>
@@ -123,12 +135,17 @@ export const Sidebar = () => {
                 </div>
                 <div className="post__form-item">
                   <label htmlFor="image">Image</label>
-                  <input
-                    type="text"
-                    id="image"
-                    onChange={(e) => setImage(e.target.value)}
-                    value={image}
-                  />
+                  <input type="file" id="image" onChange={changeImageHandler} />
+                </div>
+                <div className="post__form-item">
+                  {preview && (
+                    <img
+                      src={preview}
+                      alt="preview"
+                      width="100px"
+                      height="100px"
+                    ></img>
+                  )}
                 </div>
                 <div className="post__form-item">
                   <button className="submit__btn" onClick={handleForm}>

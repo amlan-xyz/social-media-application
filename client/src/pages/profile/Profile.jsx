@@ -23,7 +23,7 @@ export const Profile = () => {
   const foundUser = users.find((user) => user.username === username);
   const [name, setName] = useState(foundUser.name);
   const [userName, setUserName] = useState(foundUser.username);
-  const [img, setImg] = useState(foundUser.image.url);
+  const [img, setImg] = useState(foundUser.image?.url);
   const { posts } = useSelector((state) => state.post);
 
   const [showEdit, setShowEdit] = useState(false);
