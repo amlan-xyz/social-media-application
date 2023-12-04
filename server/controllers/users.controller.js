@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const cloudinary = require("cloudinary");
 const Post = require("../models/posts.model");
 const User = require("../models/users.model");
 
@@ -155,6 +156,23 @@ const getAllBookmarks = async (userId) => {
   }
 };
 
+const changeAvatar = async (userId, avatar) => {
+  try {
+    const user = await User.findById(userId)
+      .populate("followers", "username")
+      .populate("following", "username")
+      .populate("posts");
+    if (user.image?.public_id.toString().length !== 0) {
+      await cloudinary.v2.uploader.destroy(user.image.public_id);
+    }
+    user.image = avatar;
+    await user.save();
+    return user;
+  } catch (error) {
+    console.error("Error updaing avatar", error);
+  }
+};
+
 module.exports = {
   signup,
   getAllUsers,
@@ -166,4 +184,5 @@ module.exports = {
   getAllBookmarks,
   addBookmark,
   removeBookmark,
+  changeAvatar,
 };

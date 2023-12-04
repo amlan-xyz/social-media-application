@@ -4,6 +4,23 @@
   align-items: center;
   margin-bottom: 3rem;
 }
+.avatar__container {
+  display: flex;
+  align-items: flex-end;
+}
+
+.avatar__container button {
+  transform: translate(-30px, -15px);
+  background-color: var(--secondary-color);
+  border: 0.2px solid;
+  border-radius: 100%;
+  font-size: 1rem;
+  width: 25px;
+}
+
+.avatar__container button:hover {
+  cursor: pointer;
+}
 
 .user__body {
   display: flex;
@@ -15,6 +32,7 @@
   width: 150px;
   aspect-ratio: 1;
   border-radius: 100%;
+  border: 2px solid var(--secondary-color);
 }
 
 .user__header {
@@ -43,5 +61,11 @@
     aspect-ratio: 1;
     border-radius: 100%;
     margin-right: 2rem;
+  }
+
+  .avatar__container button {
+    transform: translate(-55px, -15px);
+    font-size: 0.8rem;
+    width: 23px;
   }
 }

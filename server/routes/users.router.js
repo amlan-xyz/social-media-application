@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
+const cloudinary = require("cloudinary");
 
 //models
 const User = require("../models/users.model");
@@ -18,8 +19,15 @@ const {
   addBookmark,
   removeBookmark,
   getAllBookmarks,
+  changeAvatar,
 } = require("../controllers/users.controller");
+
+//middlewares
 const { authVerify } = require("../middlewares/auth.middleware");
+const { singleUpload } = require("../middlewares/multer.middleware");
+
+//utils
+const getDataUri = require("../utils/dataUri");
 
 router.get("", async (req, res) => {
   try {
@@ -204,6 +212,44 @@ router.post("/unfollow/:id", authVerify, async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
+router.post(
+  "/profile/update/avatar",
+  authVerify,
+  singleUpload,
+  async (req, res) => {
+    const { userId } = req.user;
+    const file = req.file;
+    const fileUri = getDataUri(file);
+
+    const myCloud = await cloudinary.v2.uploader.upload(fileUri.content, {
+      folder: "social media/profile",
+    });
+
+    const avatar = {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    };
+    try {
+      const user = await getUserById(userId);
+      if (user) {
+        const updatedProfile = await changeAvatar(userId, avatar);
+        if (updatedProfile) {
+          res.status(200).json({
+            message: "User avatar updated",
+            user: updatedProfile,
+          });
+        } else {
+          res.status(400).json({ message: "User updation failed" });
+        }
+      } else {
+        throw "Invalid user, Please login again";
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
+);
 
 router.post("/bookmarks/:id/add", authVerify, async (req, res) => {
   const { userId } = req.user;

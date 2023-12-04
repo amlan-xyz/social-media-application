@@ -7,11 +7,14 @@ import { Sidebar } from "../../component/Sidebar/Sidebar";
 import { useState } from "react";
 import { NoPost } from "../../component/Empty/Empty";
 import {
+  changeAvatarAsync,
   editProfileAsync,
   followUserAsync,
   unfollowUserAsync,
 } from "../../features/user/userSlice";
 import "./Profile.css";
+
+import { MdEdit } from "react-icons/md";
 
 export const Profile = () => {
   const dispatch = useDispatch();
@@ -20,10 +23,13 @@ export const Profile = () => {
   const foundUser = users.find((user) => user.username === username);
   const [name, setName] = useState(foundUser.name);
   const [userName, setUserName] = useState(foundUser.username);
-  const [img, setImg] = useState(foundUser.profile_img);
+  const [img, setImg] = useState(foundUser.image.url);
   const { posts } = useSelector((state) => state.post);
 
   const [showEdit, setShowEdit] = useState(false);
+  const [showAvatarForm, setShowAvatarForm] = useState(false);
+  const [avatarPreview, setAvatarPreview] = useState("");
+  const [avatar, setAvatar] = useState();
   const navigate = useNavigate();
 
   const handleEdit = (e) => {
@@ -51,16 +57,45 @@ export const Profile = () => {
     dispatch(unfollowUserAsync(userId));
   };
 
+  const changeImageHandler = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setAvatar(file);
+      setAvatarPreview(reader.result);
+    };
+  };
+
+  const handleAvatar = (e) => {
+    e.preventDefault();
+    dispatch(changeAvatarAsync(avatar));
+    setAvatar("");
+    setAvatarPreview("");
+    setShowAvatarForm(false);
+  };
+
+  const toggleAvatarForm = () => {
+    setShowAvatarForm(false);
+    setAvatarPreview("");
+  };
+
   return (
     <div className="layout">
       <Sidebar />
       <section className="content">
         <div className="user__container">
-          <img
-            className="profile__img"
-            src={user.profile_img ? user.profile_img : "/images/demo.png"}
-            alt="my profile pic"
-          />
+          <div className="avatar__container">
+            <img
+              className="profile__img"
+              src={user.image ? user.image.url : "/images/demo.png"}
+              alt="my profile pic"
+            />
+            <button onClick={() => setShowAvatarForm(true)}>
+              <MdEdit />
+            </button>
+          </div>
+
           <div className="user__body">
             <div className="user__header">
               <h2>{foundUser.username}</h2>
@@ -161,6 +196,41 @@ export const Profile = () => {
                 </div>
                 <div className="post__form-item">
                   <button onClick={handleEdit} className="submit__btn">
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+      {showAvatarForm && (
+        <div className="modal">
+          <div className="modal_wrapper"></div>
+          <div className="modal_container">
+            <div className="post__form-container">
+              <div className="post__form-header">
+                <button onClick={toggleAvatarForm}>
+                  <AiOutlineClose />
+                </button>
+              </div>
+              <form action="" className="post__form-body">
+                <div className="post__form-item">
+                  <label htmlFor="image">Image</label>
+                  <input id="image" type="file" onChange={changeImageHandler} />
+                </div>
+                <div className="post__form-item">
+                  {avatarPreview && (
+                    <img
+                      src={avatarPreview}
+                      alt="preview"
+                      width="100px"
+                      height="100px"
+                    ></img>
+                  )}
+                </div>
+                <div className="post__form-item">
+                  <button onClick={handleAvatar} className="submit__btn">
                     Submit
                   </button>
                 </div>

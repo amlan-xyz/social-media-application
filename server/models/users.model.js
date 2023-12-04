@@ -20,8 +20,9 @@ const usersSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    profile_img: {
-      type: String,
+    image: {
+      public_id: String,
+      url: String,
     },
     posts: [
       {

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import {
+  changeAvatar,
   createUser,
   fetchProfile,
   fetchUsers,
@@ -66,6 +67,14 @@ export const editProfileAsync = createAsyncThunk(
   async (updatedData) => {
     const { data } = await updateProfile(updatedData);
     return data.profile;
+  }
+);
+
+export const changeAvatarAsync = createAsyncThunk(
+  "user/changeAvatar",
+  async (avatar) => {
+    const { data } = await changeAvatar(avatar);
+    return data.user;
   }
 );
 
@@ -191,6 +200,26 @@ const userSlice = createSlice({
       state.status = "error";
       state.error = action.error.message;
       toast.error("Failed to unfollow");
+    },
+    [changeAvatarAsync.pending]: (state) => {
+      state.status = "loading";
+    },
+    [changeAvatarAsync.fulfilled]: (state, action) => {
+      state.status = "success";
+      const updatedUser = action.payload;
+      const userIdx = state.users.findIndex(
+        ({ username }) => username === updatedUser.username
+      );
+      if (userIdx !== -1) {
+        state.users[userIdx] = updatedUser;
+      }
+      state.user = updatedUser;
+      toast.success("Profile Updated");
+    },
+    [changeAvatarAsync.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = action.error.message;
+      toast.error("Failed to update profile");
     },
   },
 });

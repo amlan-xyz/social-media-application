@@ -68,3 +68,19 @@ export const fetchProfile = async () => {
   });
   return response;
 };
+
+export const changeAvatar = async (avatar) => {
+  const response = await axios.post(
+    `${api}/profile/update/avatar`,
+    {
+      file: avatar,
+    },
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        authorization: localStorage.getItem("token"),
+      },
+    }
+  );
+  return response;
+};
