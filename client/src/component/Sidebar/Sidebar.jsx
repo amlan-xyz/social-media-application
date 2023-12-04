@@ -92,7 +92,7 @@ export const Sidebar = () => {
 
         <div className="sidebar__footer">
           <img
-            src={user.profile_img ? user.profile_img : "/images/demo.png"}
+            src={user.image ? user.image.url : "/images/demo.png"}
             alt={user.name}
           />
           <div className="sidebar__footer-body">

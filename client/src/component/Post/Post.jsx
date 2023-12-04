@@ -93,9 +93,7 @@ export const Post = ({ postId }) => {
         <div className="post__header-content">
           <img
             src={
-              post.author.profile_img
-                ? post.author.profile_img
-                : "/images/demo.png"
+              post.author.image.url ? post.author.image.url : "/images/demo.png"
             }
             alt={post.author.username}
           />

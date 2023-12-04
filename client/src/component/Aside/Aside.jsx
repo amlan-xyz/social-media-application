@@ -32,7 +32,7 @@ export const Aside = () => {
           <li key={user._id} className="aside__item">
             <div className="aside__item-body">
               <img
-                src={user.profile_img ? user.profile_img : "/images/demo.png"}
+                src={user.image ? user.image.url : "/images/demo.png"}
                 alt={user.username}
               />
               <div className="aside__item-content">
