@@ -5,7 +5,7 @@ Social Media Application built using ReactJS with Redux state management, consum
 ## Features -
 1. User Feed
    - List of all user posts
-   - Sort by Date & Trending
+   - Sort by Trending
 2. Create a Post
 3. Like a Post
 4. Comment on a post
