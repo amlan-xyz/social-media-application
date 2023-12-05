@@ -37,7 +37,8 @@ export const Sidebar = () => {
   };
 
   const getActiveStyle = ({ isActive }) => ({
-    color: isActive ? "#2B2A4C" : "",
+    // color: isActive ? "#2B2A4C" : "",
+    textDecoration: isActive ? "underline" : "",
   });
 
   const changeImageHandler = (e) => {
