@@ -8,7 +8,11 @@ const app = express();
 app.use(express.json());
 
 //cors
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://we-share-v1.vercel.app"],
+  })
+);
 
 //routers
 const usersRouter = require("./routes/users.router");
