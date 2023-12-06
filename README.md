@@ -1,6 +1,6 @@
 # [We Share](https://we-share-v1.vercel.app/) (Social Media Application)
 
-Social Media Application built using ReactJS with Redux state management, consuming a Node/Express API that interacts with a MongoDB database and hosted in AWS EC2 instance. ⚛️
+Social Media Application is built using ReactJS with Redux state management, consuming a Node/Express API that interacts with a MongoDB database. ⚛️
 This project also utilizes Cloudinary, a cloud-based image hosting platform, to efficiently store and manage images for both the backend Node.js server and the frontend React application.
 
 ## Features -
