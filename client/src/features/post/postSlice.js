@@ -27,7 +27,6 @@ export const createPostAsync = createAsyncThunk(
   "post/createPost",
   async ({ caption, image }) => {
     const { data } = await createPost({ caption, image });
-    console.log(data.post);
     return data.post;
   }
 );
