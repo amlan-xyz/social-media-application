@@ -88,12 +88,16 @@ export const Profile = () => {
           <div className="avatar__container">
             <img
               className="profile__img"
-              src={user.image ? user.image.url : "/images/demo.png"}
+              src={foundUser.image ? foundUser.image.url : "/images/demo.png"}
               alt="my profile pic"
             />
-            <button onClick={() => setShowAvatarForm(true)}>
-              <MdEdit />
-            </button>
+            {user?.username === foundUser?.username ? (
+              <button onClick={() => setShowAvatarForm(true)}>
+                <MdEdit />
+              </button>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="user__body">
