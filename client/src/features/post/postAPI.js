@@ -1,16 +1,16 @@
 import axios from "axios";
 import { BASE_URL } from "../../utils/baseUrl";
 
-const api = `${BASE_URL}/posts`;
+const BACKEND_URL = `${BASE_URL}/posts`;
 
 export const fetchPosts = async () => {
-  const response = await axios.get(api);
+  const response = await axios.get(BACKEND_URL);
   return response;
 };
 
 export const createPost = async (postData) => {
   const response = await axios.post(
-    api,
+    BACKEND_URL,
     {
       caption: postData.caption,
       file: postData.image,
@@ -27,7 +27,7 @@ export const createPost = async (postData) => {
 };
 
 export const editPost = async (postId, postData) => {
-  const response = await axios.put(`${api}/${postId}`, postData, {
+  const response = await axios.put(`${BACKEND_URL}/${postId}`, postData, {
     headers: {
       authorization: localStorage.getItem("token"),
     },
@@ -36,7 +36,7 @@ export const editPost = async (postId, postData) => {
 };
 
 export const likePost = async (postId) => {
-  const response = await fetch(`${api}/${postId}/like`, {
+  const response = await fetch(`${BACKEND_URL}/${postId}/like`, {
     method: "POST",
     headers: {
       authorization: localStorage.getItem("token"),
@@ -47,7 +47,7 @@ export const likePost = async (postId) => {
 };
 
 export const unlikePost = async (postId) => {
-  const response = await fetch(`${api}/${postId}/unlike`, {
+  const response = await fetch(`${BACKEND_URL}/${postId}/unlike`, {
     method: "POST",
     headers: {
       authorization: localStorage.getItem("token"),
@@ -58,7 +58,7 @@ export const unlikePost = async (postId) => {
 };
 
 export const deletePost = async (postId) => {
-  const response = await axios.delete(`${api}/${postId}`, {
+  const response = await axios.delete(`${BACKEND_URL}/${postId}`, {
     headers: {
       authorization: localStorage.getItem("token"),
     },
@@ -68,7 +68,7 @@ export const deletePost = async (postId) => {
 
 export const addComment = async (postId, commentData) => {
   const response = await axios.post(
-    `${api}/${postId}/comments/add`,
+    `${BACKEND_URL}/${postId}/comments/add`,
     commentData,
     {
       headers: {
@@ -81,7 +81,7 @@ export const addComment = async (postId, commentData) => {
 
 export const removeComment = async (postId, commentId) => {
   const response = await axios.post(
-    `${api}/${postId}/comments/${commentId}/remove`,
+    `${BACKEND_URL}/${postId}/comments/${commentId}/remove`,
     {},
     {
       headers: {

@@ -36,8 +36,8 @@ app.get("/", (req, res) => {
 });
 
 //routes
-app.use("/api/users", usersRouter);
-app.use("/api/posts", postsRouter);
+app.use("/users", usersRouter);
+app.use("/posts", postsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
