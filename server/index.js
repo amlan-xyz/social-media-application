@@ -10,8 +10,8 @@ app.use(express.json());
 //cors
 
 let allowedDomains = [
-  "http://localhost:3000",
-  "https://we-share-v1.vercel.app",
+  "http://localhost:3000/",
+  "https://we-share-v1.vercel.app/",
 ];
 app.use(
   cors({
