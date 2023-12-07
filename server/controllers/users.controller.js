@@ -162,7 +162,7 @@ const changeAvatar = async (userId, avatar) => {
       .populate("followers", "username")
       .populate("following", "username")
       .populate("posts");
-    if (user.image?.public_id.toString().length !== 0) {
+    if (user.image?.public_id) {
       await cloudinary.v2.uploader.destroy(user.image.public_id);
     }
     user.image = avatar;
