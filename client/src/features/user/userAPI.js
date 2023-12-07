@@ -5,6 +5,7 @@ const api = `${BASE_URL}/users`;
 
 export const createUser = async (userData) => {
   const response = await axios.post(`${api}/signup`, userData);
+  localStorage.setItem("token", response.data.token);
   return response;
 };
 
